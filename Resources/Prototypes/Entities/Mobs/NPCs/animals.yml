@@ -1929,6 +1929,7 @@
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
+  - type: FelinidFood
   - type: Speech
     speechSounds: Squeak
     speechVerb: SmallMob

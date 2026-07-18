@@ -97,6 +97,17 @@ public sealed class AllGamePresetsStartTest : AntagTest
             players = players.Union(dummies).ToList();
         }
 
+        // SD edit start
+        // Dummy prefs load asynchronously on InGame. Wait before mutating profiles.
+        await Pair.RunUntilSynced();
+
+        // Dummy profiles randomly pick round-start species. Ipc is ZombieImmune, so
+        // InitialInfected pre-selection can be deselected after spawn and fail this test.
+        foreach (var session in players)
+        {
+            await Pair.SetSpecies("Human", session.UserId);
+        }
+        // SD edit end
         await Pair.RunUntilSynced();
 
         // This also ensures that admin commands work properly :P

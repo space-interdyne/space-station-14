@@ -1,0 +1,70 @@
+- type: emote
+  id: Meow
+  name: chat-emote-name-catmeow
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    tags:
+    - SiliconEmotes
+  chatMessages: ["chat-emote-msg-catmeow"]
+  chatTriggers:
+  - meow
+  - meows
+  - meowing
+  - meowed
+  - miau
+  - miaus
+  - nya
+  - nyas
+  - mraow
+  - mraows
+  - мяу
+  - мяукает
+  - мяв
+  - ня
+  - мрау
+
+- type: emote
+  id: Mew
+  name: chat-emote-name-mew
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    tags:
+    - SiliconEmotes
+  chatMessages: ["chat-emote-msg-mew"]
+  chatTriggers:
+  - mew
+  - mews
+  - mewing
+  - mewed
+  - мью
+  - мяукнул
+  - мяукнула
+
+- type: emote
+  id: Hiss
+  name: chat-emote-name-hiss
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    tags:
+    - SiliconEmotes
+  chatMessages: ["chat-emote-msg-hiss"]
+  chatTriggers:
+  - hiss
+  - hisses
+  - hissing
+  - hissed
+  - шипит
+  - зашипел
+  - зашипела

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.EntitySerialization;
@@ -58,6 +59,28 @@ public sealed partial class TestPair
         return mapData;
     }
 
+    // SD edit start
+    /// <summary>
+    /// Set a user's species. Modified preferences are automatically reset at the end of the test.
+    /// </summary>
+    public async Task SetSpecies(ProtoId<SpeciesPrototype> species, NetUserId? user = null)
+    {
+        user ??= Client.User!.Value;
+        if (user is not { } userId)
+            return;
+
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        var prefs = prefMan.GetPreferences(userId);
+
+        // Automatic preference resetting only resets slot 0.
+        Assert.That(prefs.SelectedCharacterIndex, Is.EqualTo(0));
+
+        var profile = ((HumanoidCharacterProfile)prefs.Characters[0]).WithSpecies(species);
+        _modifiedProfiles.Add(userId);
+        await Server.WaitPost(() => prefMan.SetProfile(userId, 0, profile).Wait());
+    }
+    // SD edit end
+    
     /// <summary>
     /// Set a user's antag preferences. Modified preferences are automatically reset at the end of the test.
     /// </summary>

@@ -1,0 +1,32 @@
+- type: entity
+  parent: Solution
+  id: SolutionHairball
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: hairball
+    solution:
+      maxVol: 25
+      reagents:
+      - ReagentId: Protein
+        Quantity: 2
+
+- type: entity
+  parent: BaseItem
+  id: Hairball
+  name: hairball
+  description: Felinids, man...
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Specific/Species/felinid.rsi
+    state: icon
+  - type: Hairball
+  - type: SolutionManager
+    solutions:
+    - SolutionHairball
+  - type: Extractable
+    grindableSolutionName: hairball
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash

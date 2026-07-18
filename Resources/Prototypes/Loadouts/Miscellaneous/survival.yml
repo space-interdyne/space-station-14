@@ -18,6 +18,10 @@
     - Human
     - Moth
     - Reptilian
+    - Tajaran
+    - Felinid
+    - Resomi
+    - Demon
     - Vulpkanin
 
 - type: loadoutEffectGroup
@@ -76,6 +80,10 @@
     - Dwarf
     - Human
     - Reptilian
+    - Tajaran
+    - Felinid
+    - Resomi
+    - Demon
     - Vulpkanin
 
 - type: loadoutEffectGroup

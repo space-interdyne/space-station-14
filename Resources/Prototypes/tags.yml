@@ -1174,6 +1174,9 @@
   id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
 
 - type: Tag
+  id: PreventLabel # PseudoItem entities blacklist labeling.
+
+- type: Tag
   id: PrisonUniform # CargoBounty: BountyPrisonUniform
 
 - type: Tag

@@ -12,11 +12,11 @@ namespace Content.Shared.Item;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
-[Access(typeof(SharedItemSystem)), AutoGenerateComponentState(true)]
+[Access(typeof(SharedItemSystem), typeof(Content.Shared.Nyanotrasen.Item.PseudoItem.SharedPseudoItemSystem)), AutoGenerateComponentState(true)]
 public sealed partial class ItemComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    [Access(typeof(SharedItemSystem))]
+    [Access(typeof(SharedItemSystem), typeof(Content.Shared.Nyanotrasen.Item.PseudoItem.SharedPseudoItemSystem))]
     public ProtoId<ItemSizePrototype> Size = "Small";
 
     [Access(typeof(SharedItemSystem))]

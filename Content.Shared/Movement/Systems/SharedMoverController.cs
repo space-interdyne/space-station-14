@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._DV.StepTrigger.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
@@ -64,6 +65,7 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] protected EntityQuery<RelayInputMoverComponent> RelayQuery = default!;
     [Dependency] protected EntityQuery<PullableComponent> PullableQuery = default!;
     [Dependency] protected EntityQuery<TransformComponent> XformQuery = default!;
+    [Dependency] protected EntityQuery<NoShoesSilentFootstepsComponent> NoShoesSilentQuery = default!;
 
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
@@ -544,6 +546,13 @@ public abstract partial class SharedMoverController : VirtualController
             return false;
 
         mobMover.StepSoundDistance -= distanceNeeded;
+
+        // Felinids / similar: silent when barefoot.
+        if (NoShoesSilentQuery.HasComp(uid) &&
+            !_inventory.TryGetSlotEntity(uid, "shoes", out _))
+        {
+            return false;
+        }
 
         if (FootstepModifierQuery.TryComp(uid, out var moverModifier))
         {

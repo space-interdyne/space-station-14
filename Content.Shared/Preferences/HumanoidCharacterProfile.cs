@@ -322,17 +322,19 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Generates a randomized character profile.
         /// </summary>
+        /// <param name="ignoredSpecies">Species to exclude from the random species pool.</param>
         /// <returns>A new character profile with values randomized</returns>
         public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
         {
-            var config = RandomizeConfigAll;
-            var baseProfile = new HumanoidCharacterProfile();
-            if (ignoredSpecies != null)
-            {
-                baseProfile.Species = RandomSpecies(ignoredSpecies);
-            }
-            var profile = Random(config, baseProfile);
-            return profile;
+            // SD edit start
+            if (ignoredSpecies == null)
+                return Random(RandomizeConfigAll, new HumanoidCharacterProfile());
+
+            // Species is chosen against the blacklist first; other fields are randomized for that species.
+            return Random(
+                RandomizeConfigAll ^ RandomizeCfg.Species,
+                new HumanoidCharacterProfile().WithSpecies(RandomSpecies(ignoredSpecies).ID));
+            // SD edit end
         }
 
         /// <summary>

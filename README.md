@@ -46,7 +46,7 @@
 <a href="https://spacestation14.io/about/nightlies/"><img src="https://img.shields.io/badge/nightlies-%D0%B1%D0%B5%D0%B7%20steam-334155?style=flat-square&logo=firefox&logoColor=94a3b8&labelColor=1e293b"/></a>
 </td>
 <td align="center" width="33%">
-<a href="https://github.com/space-wizards/space-station-14"><img src="https://img.shields.io/badge/upstream-Corvax-334155?style=flat-square&logo=github&logoColor=94a3b8&labelColor=1e293b"/></a>
+<a href="https://github.com/space-wizards/space-station-14"><img src="https://img.shields.io/badge/upstream-WizDen-334155?style=flat-square&logo=github&logoColor=94a3b8&labelColor=1e293b"/></a>
 </td>
 <td align="center" width="33%">
 <a href="https://github.com/space-interdyne/space-station-14"><img src="https://img.shields.io/badge/repo-SD-334155?style=flat-square&logo=github&logoColor=94a3b8&labelColor=1e293b"/></a>

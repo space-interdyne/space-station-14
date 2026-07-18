@@ -521,7 +521,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private bool CheckFixtures(Entity<FixturesComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false)) // SD edit
             return false;
 
         // TODO: Maybe also check that our cursor is intersecting a valid fixture?

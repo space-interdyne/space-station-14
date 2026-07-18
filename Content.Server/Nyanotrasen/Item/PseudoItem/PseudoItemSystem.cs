@@ -11,8 +11,8 @@ namespace Content.Server.Nyanotrasen.Item.PseudoItem;
 
 public sealed class PseudoItemSystem : SharedPseudoItemSystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

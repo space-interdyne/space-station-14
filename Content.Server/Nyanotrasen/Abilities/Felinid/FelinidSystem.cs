@@ -21,15 +21,15 @@ namespace Content.Server.Nyanotrasen.Abilities.Felinid;
 
 public sealed class FelinidSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly HungerSystem _hungerSystem = default!;
-    [Dependency] private readonly VomitSystem _vomitSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionSystem = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedChargesSystem _sharedChargesSystem = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private HungerSystem _hungerSystem = default!;
+    [Dependency] private VomitSystem _vomitSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedChargesSystem _sharedChargesSystem = default!;
 
     private readonly Queue<EntityUid> _remQueue = new();
 

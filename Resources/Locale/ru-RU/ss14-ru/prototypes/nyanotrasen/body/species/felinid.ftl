@@ -1,0 +1,10 @@
+ent-AppearanceFelinid = внешность фелинида
+    .desc = { ent-BaseSpeciesAppearance.desc }
+ent-MobFelinid = Урист МакФелинид
+    .desc = { ent-AppearanceFelinid.desc }
+ent-Hairball = комок шерсти
+    .desc = Фелиниды, господи...
+ent-ActionEatMouse = Съесть мышь
+    .desc = Съесть мышь в руке, получив питательные вещества и заряд комка шерсти.
+ent-ActionHairball = Откашлять комок шерсти
+    .desc = Очистить химический поток и получить комок шерсти, которым можно кидаться.

@@ -15,6 +15,7 @@ public sealed partial class OwOAccentSystem : RelayAccentSystem<OwOAccentCompone
     private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
         {
             { "you", "wu" },
+            { "ты", "ти" }, // Corvax-Localization
         };
 
     public string Accentuate(string message)
@@ -26,7 +27,11 @@ public sealed partial class OwOAccentSystem : RelayAccentSystem<OwOAccentCompone
 
         return message.Replace("!", _random.Pick(Faces))
             .Replace("r", "w").Replace("R", "W")
-            .Replace("l", "w").Replace("L", "W");
+            .Replace("l", "w").Replace("L", "W")
+             // Corvax-Localization-Start
+            .Replace("р", "в").Replace("Р", "В")
+            .Replace("л", "в").Replace("Л", "В");
+            // Corvax-Localization-End
     }
 
     protected override string AccentuateInternal(EntityUid uid, OwOAccentComponent comp, string message)

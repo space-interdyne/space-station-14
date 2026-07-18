@@ -19,7 +19,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Nyanotrasen.Abilities.Felinid;
 
-public sealed class FelinidSystem : EntitySystem
+public sealed partial class FelinidSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private HungerSystem _hungerSystem = default!;

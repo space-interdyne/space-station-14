@@ -1,0 +1,21 @@
+- type: species
+  id: Ipc
+  name: species-name-Ipc
+  roundStart: true
+  prototype: MobIpc
+  defaultSkinTone: "#eb943d"
+  dollPrototype: AppearanceIpc
+  skinColoration: Hues
+  maleFirstNames: NamesIpcFirstMale
+  femaleFirstNames: NamesIpcFirstFemale
+  lastNames: NamesIpcLast
+  minAge: 0
+  sexes:
+  - Unsexed
+  defaultSoundsBySex:
+  - MaleIpc
+  - FemaleIpc
+  - MaleIpc
+  voices:
+  - MaleIpc
+  - FemaleIpc

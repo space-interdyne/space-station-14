@@ -184,6 +184,21 @@
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
+  # Corvax-IPC
+  - type: Healing
+    damageContainers:
+      - SiliconIpc
+    damage:
+      types:
+        Shock: -6
+        Blunt: -6
+        Slash: -6
+        Piercing: -6
+        Heat: -6
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
 
 - type: entity
   parent: CableApcStack

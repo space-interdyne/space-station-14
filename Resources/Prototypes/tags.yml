@@ -795,6 +795,9 @@
 ## I ##
 
 - type: Tag
+  id: Ipc # Corvax-IPC species tag for emote whitelists/blacklists
+
+- type: Tag
   id: Ice # CreateEntityTileReaction whitelist on Fresium
 
 - type: Tag

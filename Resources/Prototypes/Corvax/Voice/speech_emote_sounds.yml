@@ -42,8 +42,6 @@
       path: /Audio/Machines/buzz-sigh.ogg
     Buzz-TwoIpc:
       path: /Audio/Machines/buzz-two.ogg
-    HonkIpc:
-      path: /Audio/Items/bikehorn.ogg
     PingIpc:
       path: /Audio/Effects/Cargo/ping.ogg
     Clap:

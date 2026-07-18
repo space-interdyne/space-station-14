@@ -184,7 +184,7 @@
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
-  # Corvax-IPC: LV cable coils repair IPC chassis
+  # Corvax-IPC
   - type: Healing
     damageContainers:
       - SiliconIpc

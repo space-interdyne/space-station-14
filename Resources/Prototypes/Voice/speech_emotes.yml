@@ -84,6 +84,7 @@
   blacklist:
     tags:
     - SiliconEmotes
+    - Ipc # Corvax-IPC
   chatMessages: ["chat-emote-msg-sigh"]
   chatTriggers:
     - sigh
@@ -101,6 +102,7 @@
   blacklist:
     tags:
     - SiliconEmotes
+    - Ipc # Corvax-IPC
   chatMessages: ["chat-emote-msg-whistle"]
   chatTriggers:
     - whistle

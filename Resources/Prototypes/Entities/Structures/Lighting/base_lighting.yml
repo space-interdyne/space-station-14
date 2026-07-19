@@ -24,6 +24,8 @@
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     drawdepth: WallMountedItems
+    noRot: true
+    snapCardinals: true
     layers:
     - map: ["enum.PoweredLightLayers.Base"]
       state: base
@@ -91,6 +93,8 @@
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    noRot: true
+    snapCardinals: true
     state: empty
   - type: PointLight
     enabled: false
@@ -254,6 +258,8 @@
         path: /Audio/Ambience/Objects/light_hum.ogg
     - type: Sprite
       sprite: Structures/Wallmounts/Lighting/light_small.rsi
+      noRot: true
+      snapCardinals: true
       state: base
     - type: PointLight
       energy: 1.0
@@ -303,6 +309,8 @@
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
+    noRot: true
+    snapCardinals: true
     state: empty
   - type: AmbientSound
     enabled: false
@@ -450,6 +458,8 @@
     speed: 40
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
+    noRot: true
+    snapCardinals: true
     layers:
     - state: base
       map: [ "enum.EmergencyLightVisualLayers.Base" ]

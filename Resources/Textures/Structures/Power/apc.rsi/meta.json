@@ -1,82 +1,79 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fca7f2a0f9154c0c6c4efc2f8f58441fb9b34759",
+  "copyright": "Taken from Shiptest at https://github.com/shiptest-ss13/Shiptest and converted for Space Station 14",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "base"
-    },
-	{
-      "name": "static"
+      "name": "base",
+      "directions": 4
     },
     {
-      "name": "broken"
+      "name": "static",
+      "directions": 4
     },
     {
-      "name": "frame"
+      "name": "broken",
+      "directions": 4
     },
     {
-      "name": "panel"
+      "name": "frame",
+      "directions": 4
     },
     {
-      "name": "lock0-locked"
+      "name": "panel",
+      "directions": 4
     },
     {
-      "name": "lock1-locked"
+      "name": "lock0-locked",
+      "directions": 4
+    },
+    {
+      "name": "lock1-locked",
+      "directions": 4
     },
     {
       "name": "display-lack",
-      "delays": [
-        [
-          1,
-          2
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "display-charging",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.2
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "display-full",
-      "delays": [
-        [
-          1,
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "display-remote",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "emag-unlit",
+      "directions": 4,
       "delays": [
         [
-          0.5,
-          0.5
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
         ]
       ]
     },

@@ -24,6 +24,8 @@
     access: [["Engineering"]]
   - type: Sprite
     drawdepth: WallMountedItems
+    noRot: true
+    snapCardinals: true
     sprite: Structures/Power/apc.rsi
     layers:
     - state: base
@@ -161,6 +163,8 @@
   components:
   - type: Sprite
     sprite: Structures/Power/apc.rsi
+    noRot: true
+    snapCardinals: true
     state: frame
   - type: Construction
     graph: APC

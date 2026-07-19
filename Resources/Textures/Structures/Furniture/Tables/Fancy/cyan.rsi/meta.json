@@ -1,163 +1,46 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Shiptest at https://github.com/shiptest-ss13/Shiptest and converted for Space Station 14",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/HEAD/icons/obj/structures.dmi",
   "states": [
     {
-      "name": "full",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "full"
     },
     {
       "name": "state_0",
-      "directions": 4,
-      "delays": [
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "state_1",
-      "directions": 4,
-      "delays": [
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "state_2",
-      "directions": 4,
-      "delays": [
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "state_3",
-      "directions": 4,
-      "delays": [
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "state_4",
-      "directions": 4,
-      "delays": [
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "state_5",
-      "directions": 4,
-      "delays": [
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "state_6",
-      "directions": 4,
-      "delays": [
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "state_7",
-      "directions": 4,
-      "delays": [
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ],
-        [
-          1.0
-        ]
-      ]
+      "directions": 4
     }
   ]
 }

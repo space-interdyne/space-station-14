@@ -1,3 +1,4 @@
+using Content.Client._SD.Input;
 using Content.Shared.Input;
 using Robust.Shared.Input;
 
@@ -58,6 +59,7 @@ namespace Content.Client.Input
             human.AddFunction(EngineKeyFunctions.MoveRight);
             human.AddFunction(EngineKeyFunctions.Walk);
             human.AddFunction(ContentKeyFunctions.ToggleKnockdown);
+            SDContentContexts.AddHumanFunctions(human); // SD
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.SwapHandsReverse);
             human.AddFunction(ContentKeyFunctions.Drop);

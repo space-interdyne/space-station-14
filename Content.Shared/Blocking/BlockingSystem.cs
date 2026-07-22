@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Blocking.Components;
 using Content.Shared.Damage;
@@ -10,64 +11,52 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Maps;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Blocking;
 
 public sealed partial class BlockingSystem : EntitySystem
 {
-    [Dependency] private ActionContainerSystem _actionContainer = default!;
-    [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private FixtureSystem _fixtureSystem = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private SharedTransformSystem _transformSystem = default!;
-    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!; // SD
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!; // SD
 
     [Dependency] private EntityQuery<BlockingComponent> _blockQuery;
     [Dependency] private EntityQuery<BlockingUserComponent> _userQuery;
     [Dependency] private EntityQuery<HandsComponent> _handQuery;
-    [Dependency] private EntityQuery<MobStateComponent> _mobQuery;
 
     public override void Initialize()
     {
         base.Initialize();
         InitializeUser();
+        InitializeSD(); // SD
 
         SubscribeLocalEvent<BlockingComponent, ItemToggledEvent>(OnItemToggled);
         SubscribeLocalEvent<BlockingComponent, GotEquippedHandEvent>(OnEquip);
         SubscribeLocalEvent<BlockingComponent, GotUnequippedHandEvent>(OnUnequip);
         SubscribeLocalEvent<BlockingComponent, DroppedEvent>(OnDrop);
 
-        SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
+        // shield raise/lower is a keybind now, not a hotbar action, SD
+        // SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<BlockingComponent, ToggleActionEvent>(OnToggleAction);
 
         SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<BlockingComponent, GetVerbsEvent<ExamineVerb>>(OnVerbExamine);
-        SubscribeLocalEvent<BlockingComponent, MapInitEvent>(OnMapInit);
-    }
-
-    private void OnMapInit(Entity<BlockingComponent> entity, ref MapInitEvent args)
-    {
-        if (!CanBlock(entity.AsNullable()))
-            return;
-
-        _actionContainer.EnsureAction(entity, ref entity.Comp.BlockingToggleActionEntity, entity.Comp.BlockingToggleAction);
-        DirtyField(entity, entity.Comp, nameof(BlockingComponent.BlockingToggleActionEntity));
+        // no ActionToggleBlock on map init, SD
+        // SubscribeLocalEvent<BlockingComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnItemToggled(Entity<BlockingComponent> entity, ref ItemToggledEvent args)
@@ -98,38 +87,14 @@ public sealed partial class BlockingSystem : EntitySystem
     {
         StopBlocking(entity, args.User);
     }
-
-    private void OnGetActions(Entity<BlockingComponent> entity, ref GetItemActionsEvent args)
-    {
-        args.AddAction(ref entity.Comp.BlockingToggleActionEntity, entity.Comp.BlockingToggleAction);
-    }
-
+// SD edit start
     private void OnToggleAction(Entity<BlockingComponent> entity, ref ToggleActionEvent args)
     {
         if (args.Handled || !CanBlock(entity.AsNullable()))
             return;
 
-        if (!_handQuery.TryGetComponent(args.Performer, out var hands))
+        if (!TryToggleShield(entity, args.Performer))
             return;
-
-        var shields = _handsSystem.EnumerateHeld((args.Performer, hands)).ToArray();
-
-        foreach (var shield in shields)
-        {
-            if (shield == entity.Owner)
-                continue;
-
-            if (!_blockQuery.TryGetComponent(shield, out var otherBlockComp) || !otherBlockComp.IsRaised)
-                continue;
-
-            CantBlockError(args.Performer);
-            return;
-        }
-
-        if (entity.Comp.IsRaised)
-            LowerShield(entity, args.Performer);
-        else
-            RaiseShield(entity, args.Performer);
 
         args.Handled = true;
     }
@@ -145,6 +110,37 @@ public sealed partial class BlockingSystem : EntitySystem
     }
 
     /// <summary>
+    /// Toggle raise/lower for a specific held shield, enforcing dual-raise prevention.
+    /// </summary>
+    public bool TryToggleShield(Entity<BlockingComponent> entity, EntityUid user)
+    {
+        if (!_handQuery.TryGetComponent(user, out var hands))
+            return false;
+
+        var shields = _handsSystem.EnumerateHeld((user, hands)).ToArray();
+
+        foreach (var shield in shields)
+        {
+            if (shield == entity.Owner)
+                continue;
+
+            if (!_blockQuery.TryGetComponent(shield, out var otherBlockComp) || !otherBlockComp.IsRaised)
+                continue;
+
+            CantBlockError(user);
+            return false;
+        }
+
+        if (entity.Comp.IsRaised)
+            LowerShield(entity, user);
+        else
+            RaiseShield(entity, user);
+
+        return true;
+    }
+// SD edit end
+
+    /// <summary>
     /// Called where you want the user to start blocking
     /// Creates a new hard fixture to bodyblock
     /// Also makes the user static to prevent prediction issues
@@ -157,20 +153,11 @@ public sealed partial class BlockingSystem : EntitySystem
         if (entity.Comp.IsRaised)
             return false;
 
-        var xform = Transform(user);
-
         var shieldName = Name(entity);
 
         var blockerName = Identity.Entity(user, EntityManager);
         var msgUser = Loc.GetString("action-popup-blocking-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-other", ("blockerName", blockerName), ("shield", shieldName));
-
-        //Don't allow someone to block if they're not parented to a grid
-        if (xform.GridUid != xform.ParentUid)
-        {
-            CantBlockError(user);
-            return false;
-        }
 
         // Don't allow someone to block if they're not holding the shield
         if (!_handsSystem.IsHolding(user, entity, out _))
@@ -179,28 +166,9 @@ public sealed partial class BlockingSystem : EntitySystem
             return false;
         }
 
-        //Don't allow someone to block if someone else is on the same tile
-        var playerTileRef = _turf.GetTileRef(xform.Coordinates);
-        if (playerTileRef != null)
-        {
-            var intersecting = _lookup.GetLocalEntitiesIntersecting(playerTileRef.Value, 0f);
-            foreach (var uid in intersecting)
-            {
-                if (uid != user && _mobQuery.HasComponent(uid))
-                {
-                    TooCloseError(user);
-                    return false;
-                }
-            }
-        }
+        //allow raising anytime, removed grid-parent, tile-occupancy, and anchoring checks.
+        // create a hard WallLayer fixture so the raised shield blocks passage.
 
-        //Don't allow someone to block if they're somehow not anchored.
-        _transformSystem.AnchorEntity(user, xform);
-        if (!xform.Anchored)
-        {
-            CantBlockError(user);
-            return false;
-        }
         _actionsSystem.SetToggled(entity.Comp.BlockingToggleActionEntity, true);
         _popupSystem.PopupEntity(msgUser, msgOther, user, user);
 
@@ -217,18 +185,22 @@ public sealed partial class BlockingSystem : EntitySystem
         entity.Comp.IsRaised = true;
         DirtyField(entity, entity.Comp, nameof(BlockingComponent.IsRaised));
 
+        // SD edit
+        if (TryComp<BlockingUserComponent>(user, out var blockingUser))
+        {
+            blockingUser.BlockingItem = entity;
+            DirtyField(user, blockingUser, nameof(BlockingUserComponent.BlockingItem));
+        }
+
+        // SD
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(user);
+
         return true;
     }
 
     private void CantBlockError(EntityUid user)
     {
         var msgError = Loc.GetString("action-popup-blocking-user-cant-block");
-        _popupSystem.PopupEntity(msgError, user, user);
-    }
-
-    private void TooCloseError(EntityUid user)
-    {
-        var msgError = Loc.GetString("action-popup-blocking-user-too-close");
         _popupSystem.PopupEntity(msgError, user, user);
     }
 
@@ -243,30 +215,27 @@ public sealed partial class BlockingSystem : EntitySystem
         if (!entity.Comp.IsRaised)
             return false;
 
-        var xform = Transform(user);
-
         var shieldName = Name(entity);
 
         var blockerName = Identity.Entity(user, EntityManager);
         var msgUser = Loc.GetString("action-popup-blocking-disabling-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-disabling-other", ("blockerName", blockerName), ("shield", shieldName));
 
-        //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
-        //then toggle the action to false, unanchor the user, remove the hard fixture
-        //and set the users bodytype back to their original type
-        if (TryComp<BlockingUserComponent>(user, out var blockingUserComponent) && TryComp<PhysicsComponent>(user, out var physicsComponent))
+        // Grab the users BlockingUserComponent and PhysicsComponent, toggle the action to false,
+        // and remove the hard fixture. no longer unanchors / restores BodyType (raise no longer anchors).
+        if (TryComp<BlockingUserComponent>(user, out _) && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
-            if (xform.Anchored)
-                _transformSystem.Unanchor(user, xform, false);
-
             _actionsSystem.SetToggled(entity.Comp.BlockingToggleActionEntity, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureId, body: physicsComponent);
-            _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
             _popupSystem.PopupEntity(msgUser, msgOther, user, user);
         }
 
         entity.Comp.IsRaised = false;
         DirtyField(entity, entity.Comp, nameof(BlockingComponent.IsRaised));
+
+        // SD
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(user);
+
         return true;
     }
 

@@ -168,6 +168,7 @@
   components:
   - type: Hunger
   - type: Thirst
+  - type: Arousal # SD
   - type: Barotrauma
     damage:
       types:

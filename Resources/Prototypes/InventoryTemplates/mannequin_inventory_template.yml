@@ -62,3 +62,44 @@
       uiWindowPos: 3,0
       strippingWindowPos: 0,2
       displayName: Back
+
+    # SD-Start
+    - name: socks
+      slotTexture: socks
+      slotFlags: SOCKS
+      stripTime: 3
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,3
+      displayName: Socks
+    - name: underwear
+      slotTexture: underwear
+      slotFlags: UNDERWEAR
+      stripTime: 3
+      uiWindowPos: 2,2
+      strippingWindowPos: 0,3
+      displayName: Underwear
+    - name: undershirt
+      slotTexture: undershirt
+      slotFlags: UNDERSHIRT
+      stripTime: 3
+      uiWindowPos: 2,3
+      strippingWindowPos: 1,4
+      displayName: Undershirt
+    - name: wrists
+      slotTexture: wrists
+      slotFlags: WRISTS
+      stripTime: 3
+      uiWindowPos: 3,1
+      strippingWindowPos: 2,4
+      displayName: Wrists
+    - name: underpocket
+      slotTexture: underpocket
+      slotFlags: UNDERPOCKET
+      stripTime: 3
+      uiWindowPos: 3,2
+      strippingWindowPos: 0,4
+      displayName: Anus
+      whitelist:
+        tags:
+        - underpocket
+    # SD-End

@@ -1,0 +1,23 @@
+ent-BaseDildo = базовая игрушка
+    .desc = Стой.. это что, одна из тех самых игрушек в твоей коллекции?
+
+ent-DildoAvian = птичий фаллоимитатор
+    .desc = { ent-BaseDildo.desc }
+ent-DildoCanine = собачий фаллоимитатор
+    .desc = { ent-BaseDildo.desc }
+ent-DildoDouble = двойной фаллоимитатор
+    .desc = { ent-BaseDildo.desc }
+ent-DildoDragon = драконый фаллоимитатор
+    .desc = { ent-BaseDildo.desc }
+ent-DildoEquine = лошадиный фаллоимитатор
+    .desc = { ent-BaseDildo.desc }
+ent-DildoHuman = человеческий фалос
+    .desc = { ent-BaseDildo.desc }
+ent-DildoTentacle = фаллоимитатор в форме щупальца
+    .desc = { ent-BaseDildo.desc }
+ent-PolydildoBig = длинный прозрачный фаллоимитатор
+    .desc = { ent-BaseDildo.desc }
+ent-PolydildoMed = средний прозрачный фаллоимитатор
+    .desc = { ent-BaseDildo.desc }
+ent-PolydildoSmall = маленький прозрачный фаллоимитатор
+    .desc = { ent-BaseDildo.desc }

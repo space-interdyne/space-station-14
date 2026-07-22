@@ -1,0 +1,137 @@
+- type: entity
+  parent: BaseItem
+  id: BaseVibrator
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+      - state: off
+        map: ["base"]
+  - type: GenericVisualizer
+    visuals:
+      enum.VibratorVisuals.Intensity:
+        base:
+          Off: { state: off }
+          Low: { state: low }
+          Medium: { state: medium }
+          High: { state: high }
+  - type: Vibrator
+    isTogglable: true
+    vibrationSound: /Audio/_SD/Effects/Devices/vibration_loop.ogg
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
+      - SetLow
+      - SetMedium
+      - SetHigh
+      - SetIntensity
+  - type: ItemToggle
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - underpocket
+  - type: Clothing
+    equipDelay: 2
+    unequipDelay: 5
+    quickEquip: false
+    slots:
+    - underpocket
+  - type: Appearance
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorEggPink
+  name: egg vibrator
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/egg_pink_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorEggTeal
+  name: egg vibrator
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/egg_teal_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorGreen
+  name: green vibrator
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/green_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorPink
+  name: pink vibrator
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/pink_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorRed
+  name: red vibrator
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/red_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorTeal
+  name: teal vibrator
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/teal_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorYellow
+  name: yellow vibrator
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/yellow_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorMagicWand
+  name: magic wand
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/magic_wand_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorRingPink
+  name: vibro-ring
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/ring_pink_vibrator.rsi
+
+- type: entity
+  parent: BaseVibrator
+  id: VibratorRingTeal
+  name: vibro-ring
+  description: Vibrating!
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/Vibrators/ring_teal_vibrator.rsi

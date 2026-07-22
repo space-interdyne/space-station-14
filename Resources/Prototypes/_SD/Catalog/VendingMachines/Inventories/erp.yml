@@ -1,0 +1,23 @@
+- type: vendingMachineInventory
+  id: SDErpVendingMachineInventory
+  startingInventory:
+    DildoAvian: 3
+    DildoCanine: 3
+    DildoDouble: 3
+    DildoDragon: 3
+    DildoEquine: 3
+    DildoHuman: 3
+    DildoTentacle: 3
+    PolydildoBig: 3
+    PolydildoMed: 3
+    PolydildoSmall: 3
+    VibratorEggPink: 3
+    VibratorEggTeal: 3
+    VibratorGreen: 3
+    VibratorPink: 3
+    VibratorRed: 3
+    VibratorTeal: 3
+    VibratorYellow: 3
+    VibratorMagicWand: 3
+    VibratorRingPink: 3
+    VibratorRingTeal: 3

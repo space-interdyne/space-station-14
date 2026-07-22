@@ -17,7 +17,7 @@
   - type: Clothing
     sprite: Objects/Devices/wristwatch.rsi
     slots:
-    - gloves
+    - wrists
   - type: Appearance
   - type: Damageable
   - type: Injurable

@@ -1,0 +1,22 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingWristsBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    slots: [ wrists ]
+  - type: Item
+    size: Small
+    storedRotation: -90
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  abstract: true
+  parent: ClothingWristsBase
+  id: ClothingWristsWatchBase
+  components:
+  - type: Clock

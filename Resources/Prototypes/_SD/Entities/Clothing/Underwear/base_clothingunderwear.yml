@@ -1,0 +1,41 @@
+- type: entity
+  abstract: true
+  parent: [SolutionFood, Clothing]
+  id: ClothingUnderwearBase
+  name: panties
+  description: Panties.
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - underwear
+    equipSound:
+      path: /Audio/Items/jumpsuit_equip.ogg
+      params:
+        volume: -5
+  - type: Item
+    size: Small
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 2
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 10
+  - type: TemperatureProtection
+    heatingCoefficient: 0.90
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon

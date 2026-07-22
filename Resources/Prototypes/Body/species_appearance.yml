@@ -21,11 +21,16 @@
     # Underwear & clothing
     - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
     - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+    # SD edit start
+    - map: [ "underwear" ]
+    - map: [ "undershirt" ]
+    - map: ["enum.HumanoidVisualLayers.LFoot"]
+    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: [ "socks" ]
+    # SD edit end
     - map: ["jumpsuit"]
 
     # Extremities
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
     - map: ["enum.HumanoidVisualLayers.LHand"]
     - map: ["enum.HumanoidVisualLayers.RHand"]
 
@@ -34,6 +39,7 @@
 
     # More equipment
     - map: [ "gloves" ]
+    - map: [ "wrists" ] # SD edit
     - map: [ "shoes" ]
     - map: [ "ears" ]
     - map: [ "eyes" ]

@@ -1,0 +1,15 @@
+- type: soundCollection
+  id: MaleMoan
+  files:
+  - /Audio/_SD/Voice/Misc/male_moan_1.ogg
+  - /Audio/_SD/Voice/Misc/male_moan_2.ogg
+  - /Audio/_SD/Voice/Misc/male_moan_3.ogg
+
+- type: soundCollection
+  id: FemaleMoan
+  files:
+  - /Audio/_SD/Voice/Misc/female_moan_1.ogg
+  - /Audio/_SD/Voice/Misc/female_moan_2.ogg
+  - /Audio/_SD/Voice/Misc/female_moan_3.ogg
+  - /Audio/_SD/Voice/Misc/female_moan_4.ogg
+  - /Audio/_SD/Voice/Misc/female_moan_5.ogg

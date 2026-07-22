@@ -27,6 +27,7 @@
     - alertType: Rooted
     - alertType: Pacified
     - alertType: Stealthy
+    - alertType: Arousal # SD
 
 - type: entity
   id: AlertSpriteView

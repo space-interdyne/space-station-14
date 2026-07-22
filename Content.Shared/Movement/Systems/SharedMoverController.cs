@@ -96,6 +96,7 @@ public abstract partial class SharedMoverController : VirtualController
 
         InitializeInput();
         InitializeRelay();
+        InitializeSD(); // SD
 
         Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
         Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
@@ -300,6 +301,10 @@ public abstract partial class SharedMoverController : VirtualController
             accel = moveSpeedComponent?.Acceleration ?? MovementSpeedModifierComponent.DefaultAcceleration;
             accel *= tileDef?.MobAcceleration ?? 1f;
         }
+
+        // SD edit start
+        ApplyDirectionalWishModifier(xform, ref wishDir);
+        // SD edit end
 
         // This way friction never exceeds acceleration when you're trying to move.
         // If you want to slow down an entity with "friction" you shouldn't be using this system.

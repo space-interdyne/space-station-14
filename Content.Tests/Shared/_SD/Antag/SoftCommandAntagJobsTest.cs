@@ -62,7 +62,7 @@ public sealed class SoftCommandAntagJobsTest
         Assert.That(at, Does.Not.Contain(Ce));
         Assert.That(at, Does.Not.Contain(Qm));
 
-        // Prototype set must stay intact for low-pop rounds.
+        // prototype set must stay intact for low-pop rounds
         Assert.That(blacklist, Does.Contain(Cmo));
         Assert.That(blacklist.Count, Is.EqualTo(7));
     }

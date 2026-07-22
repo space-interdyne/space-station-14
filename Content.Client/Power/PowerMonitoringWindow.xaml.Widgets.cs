@@ -91,9 +91,20 @@ public sealed partial class PowerMonitoringWindow
             button.RemoveStyleClass(StyleClass.Positive);
 
         // Update sprite
+        // SD edit start
         if (entry.MetaData.Value.SpritePath != string.Empty && entry.MetaData.Value.SpriteState != string.Empty)
+        {
             button.TextureRect.Texture = _spriteSystem.Frame0(new SpriteSpecifier.Rsi(new ResPath(entry.MetaData.Value.SpritePath), entry.MetaData.Value.SpriteState));
-
+        }
+        else if (!string.IsNullOrEmpty(entry.MetaData.Value.Prototype))
+        {
+            button.TextureRect.Texture = _spriteSystem.GetPrototypeIcon(entry.MetaData.Value.Prototype).Default;
+        }
+        else
+        {
+            button.TextureRect.Texture = null;
+        }
+        // SD edit end
         // Update name
         // no Loc.GetString, as the name already gets localized in PowerMonitoringConsoleSystem
         var name = entry.MetaData.Value.EntityName;
@@ -183,6 +194,15 @@ public sealed partial class PowerMonitoringWindow
 
     private void ButtonAction(PowerMonitoringWindowBaseEntry entry, BoxContainer masterContainer)
     {
+        // SD edit start
+        if (entry.Entry.Group == PowerMonitoringConsoleGroup.Consumer)
+        {
+            if (NavMap.TrackedEntities.TryGetValue(entry.NetEntity, out var consumerBlip))
+                NavMap.CenterToCoordinates(consumerBlip.Coordinates);
+
+            return;
+        }
+        // SD edit end
         // Toggle off button?
         if (entry.NetEntity == _focusEntity)
         {

@@ -53,6 +53,12 @@ public struct PowerMonitoringDeviceMetaData
     public string SpriteState;
     public NetEntity? CollectionMaster;
 
+    /// <summary>
+    ///     Optional prototype id used by the client to resolve an icon when
+    ///     <see cref="SpritePath"/> / <see cref="SpriteState"/> are unset (APC consumers).
+    /// </summary>
+    public string? Prototype;
+
     public PowerMonitoringDeviceMetaData(string name, NetCoordinates coordinates, PowerMonitoringConsoleGroup group, string spritePath, string spriteState)
     {
         EntityName = name;
@@ -104,7 +110,8 @@ public struct PowerMonitoringConsoleEntry
     public double PowerValue;
     public float? BatteryLevel;
 
-    [NonSerialized] public PowerMonitoringDeviceMetaData? MetaData = null;
+    // SD edit
+    public PowerMonitoringDeviceMetaData? MetaData = null; 
 
     public PowerMonitoringConsoleEntry(NetEntity netEntity, PowerMonitoringConsoleGroup group, double powerValue = 0d, float? batteryLevel = null)
     {

@@ -87,5 +87,27 @@
         showEnts: False
         occludes: False
         ent: null
+      # SD-Start
+      socks: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      underwear: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      undershirt: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      wrists: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      underpocket: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      # SD-End
   - type: Inventory
     templateId: mannequin

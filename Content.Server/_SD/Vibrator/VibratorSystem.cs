@@ -13,12 +13,12 @@ namespace Content.Server._SD.Vibrator;
 
 public sealed partial class VibratorSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly JitteringSystem _jitter = default!;
-    [Dependency] private readonly ItemToggleSystem _itemToggleSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly ArousalSystem _arousalSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private JitteringSystem _jitter = default!;
+    [Dependency] private ItemToggleSystem _itemToggleSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private ArousalSystem _arousalSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -54,7 +54,7 @@ public sealed partial class VibratorSystem : EntitySystem
             if (component.User is null || !component.IsActive)
                 continue;
 
-            if (EntityManager.HasComponent<ArousalComponent>(component.User.Value))
+            if (HasComp<ArousalComponent>(component.User.Value))
             {
                 var arousalRate = GetArousalRate(component);
                 _arousalSystem.IncreaseArousal(component.User.Value, arousalRate * frameTime);
@@ -97,7 +97,7 @@ public sealed partial class VibratorSystem : EntitySystem
     {
         component.User = args.Wearer;
 
-        if (EntityManager.HasComponent<ArousalComponent>(component.User.Value))
+        if (HasComp<ArousalComponent>(component.User.Value))
             _arousalSystem.IncreaseArousal(component.User.Value, component.ArousalAmount);
 
         UpdateVisuals(uid, component);
@@ -108,7 +108,7 @@ public sealed partial class VibratorSystem : EntitySystem
         var user = component.User;
         component.User = null;
 
-        if (user is { } userId && EntityManager.HasComponent<ArousalComponent>(userId))
+        if (user is { } userId && HasComp<ArousalComponent>(userId))
             _arousalSystem.IncreaseArousal(userId, component.ArousalAmount);
 
         UpdateVisuals(uid, component);
@@ -118,9 +118,9 @@ public sealed partial class VibratorSystem : EntitySystem
     {
         component.IsActive = args.Activated;
 
-         if (!args.Activated)
-             component.Intensity = VibratorIntensity.Off;
-         else if (component.Intensity == VibratorIntensity.Off)
+        if (!args.Activated)
+            component.Intensity = VibratorIntensity.Off;
+        else if (component.Intensity == VibratorIntensity.Off)
             component.Intensity = VibratorIntensity.Low;
 
         _audioSystem.Stop(component.Stream);

@@ -12,13 +12,12 @@ namespace Content.Server._SD.Arousal;
 // License-Identifier: AGPL-3.0-or-later
 //
 
-public sealed class ArousalSystem : EntitySystem
+public sealed partial class ArousalSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private AlertsSystem _alertsSystem = default!;
+    [Dependency] private AutoEmoteSystem _autoEmote = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     private const float ArousalUpdateInterval = 1.0f;
     private float _lastUpdate;
@@ -50,7 +49,9 @@ public sealed class ArousalSystem : EntitySystem
         if (curTime - _lastUpdate < ArousalUpdateInterval)
             return;
 
-        var query = _entityManager.EntityQueryEnumerator<ArousalComponent>();
+        _lastUpdate = curTime;
+
+        var query = EntityQueryEnumerator<ArousalComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
             if (component.ArousalCurrent <= component.MinArousal)
@@ -77,7 +78,7 @@ public sealed class ArousalSystem : EntitySystem
         if (!_cfg.GetCVar(SDCCVars.NsfwContentEnabled))
             return;
 
-        if (!_entityManager.TryGetComponent(uid, out ArousalComponent? component))
+        if (!TryComp(uid, out ArousalComponent? component))
             return;
 
         var actualAmount = amount * component.ArousalModifier;
@@ -94,7 +95,7 @@ public sealed class ArousalSystem : EntitySystem
         if (!_cfg.GetCVar(SDCCVars.NsfwContentEnabled))
             return;
 
-        if (!_entityManager.TryGetComponent(uid, out ArousalComponent? component))
+        if (!TryComp(uid, out ArousalComponent? component))
             return;
 
         var actualAmount = amount * component.ArousalModifier;
@@ -111,7 +112,7 @@ public sealed class ArousalSystem : EntitySystem
         if (!_cfg.GetCVar(SDCCVars.NsfwContentEnabled))
             return;
 
-        if (!_entityManager.TryGetComponent(uid, out ArousalComponent? component))
+        if (!TryComp(uid, out ArousalComponent? component))
             return;
 
         if (component.ArousalCurrent >= component.HighArousalThreshold &&

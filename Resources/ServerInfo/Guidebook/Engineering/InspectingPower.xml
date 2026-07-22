@@ -36,6 +36,7 @@
   For example:
   - Clicking on a source will show what that source is supplying the power to, and how much power it is supplying. It will also highlight the devices that are connected to that source.
   - Clicking on an SMES, Substation, or APC will show the two power grids it is connected to, how much power it is receiving, and how much power it is distributing, as well as the exact devices that are making an exchange with the target device.
+  - Clicking on an APC also lists its power consumers (machines drawing from that APC), sorted from highest to lowest demand. Identical machines are grouped together.
 
   ## Inspecting via Multitool
   The Multitool can be used to inspect power cables to see their power statistics.

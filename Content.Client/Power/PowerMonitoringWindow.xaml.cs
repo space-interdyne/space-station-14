@@ -31,6 +31,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         { PowerMonitoringConsoleGroup.SMES, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_hexagon.png")), Color.OrangeRed) },
         { PowerMonitoringConsoleGroup.Substation, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_square.png")), Color.Yellow) },
         { PowerMonitoringConsoleGroup.APC, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_triangle.png")), Color.LimeGreen) },
+        { PowerMonitoringConsoleGroup.Consumer, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")), Color.DeepSkyBlue) }, // SD edit
     };
 
     public EntityUid Entity;
@@ -158,6 +159,16 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
                 AddTrackedEntityToNavMap(netEntity, metaData, entitiesOfInterest);
         }
 
+        // SD edit start
+        foreach (var entry in focusLoads)
+        {
+            if (entry.Group != PowerMonitoringConsoleGroup.Consumer || entry.MetaData == null)
+                continue;
+
+            if (NavMap.Visible)
+                AddTrackedEntityToNavMap(entry.NetEntity, entry.MetaData.Value, entitiesOfInterest);
+        }
+        // SD edit end
         // Show monitor location
         var mon = _entManager.GetNetEntity(Entity);
 
@@ -173,10 +184,12 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             return;
 
         // Assign meta data to the console entries and sort them
-        allEntries = GetUpdatedPowerMonitoringConsoleEntries(allEntries, console);
+        // SD edit start
+        var sortMainByPower = GetCurrentPowerMonitoringConsoleGroup() == PowerMonitoringConsoleGroup.APC;
+        allEntries = GetUpdatedPowerMonitoringConsoleEntries(allEntries, console, sortByPowerDescending: sortMainByPower);
         focusSources = GetUpdatedPowerMonitoringConsoleEntries(focusSources, console);
-        focusLoads = GetUpdatedPowerMonitoringConsoleEntries(focusLoads, console);
-
+        focusLoads = GetUpdatedPowerMonitoringConsoleEntries(focusLoads, console, sortByPowerDescending: true);
+        // SD edit end
         // Get current console entry container
         BoxContainer currentContainer = SourcesList;
         switch (GetCurrentPowerMonitoringConsoleGroup())
@@ -269,11 +282,19 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         SystemWarningPanel.Modulate = lit ? Color.White : new Color(178, 178, 178);
     }
 
-    private PowerMonitoringConsoleEntry[] GetUpdatedPowerMonitoringConsoleEntries(PowerMonitoringConsoleEntry[] entries, PowerMonitoringConsoleComponent console)
+    // SD edit start
+    private PowerMonitoringConsoleEntry[] GetUpdatedPowerMonitoringConsoleEntries(
+        PowerMonitoringConsoleEntry[] entries,
+        PowerMonitoringConsoleComponent console,
+        bool sortByPowerDescending = false)
     {
         for (int i = 0; i < entries.Length; i++)
         {
             var entry = entries[i];
+
+            // Prefer metadata already provided by the server (APC consumers)
+            if (entry.MetaData != null)
+                continue;
 
             if (!console.PowerMonitoringDeviceMetaData.TryGetValue(entry.NetEntity, out var metaData))
                 continue;
@@ -281,8 +302,10 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             entries[i].MetaData = metaData;
         }
 
-        // Sort all devices alphabetically by their entity name (not by power usage; otherwise their position on the UI will shift)
-        Array.Sort(entries, AlphabeticalSort);
+        if (sortByPowerDescending)
+            Array.Sort(entries, PowerDescendingSort);
+        else
+            Array.Sort(entries, AlphabeticalSort);
 
         return entries;
     }
@@ -297,7 +320,13 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         return x.MetaData.Value.EntityName.CompareTo(y.MetaData.Value.EntityName);
     }
+
+    private int PowerDescendingSort(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)
+    {
+        return y.PowerValue.CompareTo(x.PowerValue);
+    }
 }
+// SD edit end
 
 public struct PowerMonitoringConsoleTrackable
 {

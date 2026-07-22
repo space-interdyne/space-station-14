@@ -394,6 +394,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 if (nodeContainer.Nodes.TryGetValue(loadNodeName, out var loadNode))
                     GetLoadsForNode(component.Focus.Value, loadNode, out loadsForFocus);
 
+                // SD edit
+                if (device.Group == PowerMonitoringConsoleGroup.APC)
+                    GetApcConsumers(component.Focus.Value, device, loadsForFocus);
+
                 // If the UI focus changed, update the highlighted power network
                 if (TryComp<PowerMonitoringCableNetworksComponent>(uid, out var cableNetworks) &&
                     cableNetworks.FocusChunks.Count == 0)

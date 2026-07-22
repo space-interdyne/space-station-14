@@ -425,15 +425,25 @@ public sealed partial class AntagSelectionSystem
 
                         if (proto.JobBlacklist != null)
                         {
-                            if (jobs.Blacklist == null)
-                                jobs.Blacklist = proto.JobBlacklist;
-                            else
-                                jobs.Blacklist.UnionWith(proto.JobBlacklist);
+                            // SD edit start
+                            var filteredBlacklist = FilterSoftCommandJobBlacklist(proto.JobBlacklist);
+                            if (filteredBlacklist != null)
+                            {
+                                if (jobs.Blacklist == null)
+                                {
+                                    jobs.Blacklist = filteredBlacklist;
+                                    result[player] = jobs;
+                                }
+                                else
+                                    jobs.Blacklist.UnionWith(filteredBlacklist);
+                            }
+                            // SD edit end
                         }
                     }
                     else
                     {
-                        result.Add(player, (proto.JobWhitelist, proto.JobBlacklist));
+                        // SD edit
+                        result.Add(player, (proto.JobWhitelist, FilterSoftCommandJobBlacklist(proto.JobBlacklist)));
                     }
                 }
             }
@@ -481,10 +491,16 @@ public sealed partial class AntagSelectionSystem
 
                 if (proto.JobBlacklist != null)
                 {
-                    if (blacklist == null)
-                        blacklist = proto.JobBlacklist;
-                    else
-                        blacklist.UnionWith(proto.JobBlacklist);
+                    // SD edit start
+                    var filteredBlacklist = FilterSoftCommandJobBlacklist(proto.JobBlacklist);
+                    if (filteredBlacklist != null)
+                    {
+                        if (blacklist == null)
+                            blacklist = filteredBlacklist;
+                        else
+                            blacklist.UnionWith(filteredBlacklist);
+                    }
+                    // SD edit end
                 }
             }
         }

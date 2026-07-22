@@ -136,8 +136,10 @@ public sealed partial class AntagSelectionSystem
 
         // "Sorry buddy, but you can't be a traitor and the head of security" - Urist 1984
         // This checks nullability for our mind for free as well!
-        if (def.JobBlacklist?.Contains(job) ?? false)
+        // SD edit start
+        if (IsJobBlacklistedForAntag(job, def))
             return false;
+        // SD edit end
 
         if (!def.JobWhitelist?.Contains(job) ?? false)
             return false;

@@ -26,4 +26,4 @@
   name: alerts-arousal-name
   description: alerts-arousal-desc
   minSeverity: 0
-  maxSeverity: 11
+  maxSeverity: 10

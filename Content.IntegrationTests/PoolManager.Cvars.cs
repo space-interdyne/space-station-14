@@ -37,5 +37,6 @@ public static partial class PoolManager
         (CCVars.MovementMobPushing.Name, "false"),
         // SD edit
         (SDCCVars.MovementDirectionalPenaltyEnabled.Name, "false"),
+        (SDCCVars.NsfwContentEnabled.Name, "false"),
     };
 }

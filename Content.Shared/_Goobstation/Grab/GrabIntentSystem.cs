@@ -28,7 +28,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
-namespace Content.Shared._SD.Grab;
+namespace Content.Shared._Goobstation.Grab;
 
 public sealed partial class GrabIntentSystem : EntitySystem
 {

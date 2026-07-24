@@ -4,7 +4,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared._SD.Grab;
+namespace Content.Shared._Goobstation.Grab;
 
 /// <summary>
 /// Stores grab-specific state for entities that can pull and escalate grabs.

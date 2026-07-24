@@ -1,4 +1,4 @@
-using Content.Shared._SD.Grab; // SD
+using Content.Shared._Goobstation.Grab; // SD
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;

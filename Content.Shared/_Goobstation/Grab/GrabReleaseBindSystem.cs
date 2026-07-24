@@ -7,7 +7,7 @@ using Content.Shared.Movement.Pulling.Systems;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
-namespace Content.Shared._SD.Grab;
+namespace Content.Shared._Goobstation.Grab;
 
 /// <summary>
 /// Binds the resist-grab key.

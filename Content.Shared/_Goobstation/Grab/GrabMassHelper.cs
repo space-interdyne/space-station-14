@@ -3,7 +3,7 @@
 
 using Robust.Shared.Physics.Components;
 
-namespace Content.Shared._SD.Grab;
+namespace Content.Shared._Goobstation.Grab;
 
 public static class GrabMassHelper
 {

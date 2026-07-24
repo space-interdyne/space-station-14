@@ -3,7 +3,7 @@
 using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared._SD.Grab;
+namespace Content.Shared._Goobstation.Grab;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class GrabThrownComponent : Component

@@ -10,7 +10,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Speech;
 using Robust.Shared.Random;
 
-namespace Content.Shared._SD.Grab;
+namespace Content.Shared._Goobstation.Grab;
 
 public sealed partial class GrabIntentSystem
 {

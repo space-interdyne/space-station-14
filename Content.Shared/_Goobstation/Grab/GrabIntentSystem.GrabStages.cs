@@ -15,7 +15,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Shared._SD.Grab;
+namespace Content.Shared._Goobstation.Grab;
 
 public sealed partial class GrabIntentSystem
 {

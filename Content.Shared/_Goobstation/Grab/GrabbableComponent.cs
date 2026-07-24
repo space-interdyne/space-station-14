@@ -4,7 +4,7 @@ using Content.Shared.Alert;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._SD.Grab;
+namespace Content.Shared._Goobstation.Grab;
 
 /// <summary>
 /// Stores grab-specific state for entities that can be grabbed while pulled.

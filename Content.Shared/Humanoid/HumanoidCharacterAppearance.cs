@@ -174,7 +174,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         {
             var strategy = proto.Index(speciesProto.SkinColoration).Strategy;
             var organs = markingManager.GetOrgans(species);
-            skinColor = strategy.EnsureVerified(skinColor);
+            skinColor = strategy.EnsureVerified(ClampColor(skinColor)); // SD edit
 
             foreach (var (organ, markings) in appearance.Markings)
             {

@@ -12,7 +12,7 @@ namespace Content.Shared._SD.Grab;
 /// <summary>
 /// Binds the resist-grab key.
 /// </summary>
-public sealed class GrabReleaseBindSystem : EntitySystem
+public sealed partial class GrabReleaseBindSystem : EntitySystem
 {
     [Dependency] private PullingSystem _pullingSystem = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;

@@ -14,7 +14,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared._SD.Grab;
 
-public sealed class GrabThrownSystem : EntitySystem
+public sealed partial class GrabThrownSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;

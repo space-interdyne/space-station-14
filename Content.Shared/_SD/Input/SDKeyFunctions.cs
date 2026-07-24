@@ -9,4 +9,5 @@ namespace Content.Shared._SD.Input;
 public static class SDKeyFunctions
 {
     public static readonly BoundKeyFunction ToggleRaiseShield = "ToggleRaiseShield";
+    public static readonly BoundKeyFunction ResistGrab = "ResistGrab";
 }

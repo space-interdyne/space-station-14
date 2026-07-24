@@ -99,13 +99,13 @@ public abstract partial class SharedPortalSystem : EntitySystem
         // break pulls before portal enter so we don't break shit
         if (TryComp<PullableComponent>(subject, out var pullable) && pullable.BeingPulled)
         {
-            _pulling.TryStopPull(subject, pullable);
+            _pulling.TryStopPull(subject, pullable, ignoreGrab: true); // SD
         }
 
         if (TryComp<PullerComponent>(subject, out var pullerComp)
             && TryComp<PullableComponent>(pullerComp.Pulling, out var subjectPulling))
         {
-            _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
+            _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling, ignoreGrab: true); // SD
         }
 
         // also break grapple joints

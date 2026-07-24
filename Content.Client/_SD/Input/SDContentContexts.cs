@@ -11,5 +11,6 @@ public static class SDContentContexts
     public static void AddHumanFunctions(IInputCmdContext human)
     {
         human.AddFunction(SDKeyFunctions.ToggleRaiseShield);
+        human.AddFunction(SDKeyFunctions.ResistGrab);
     }
 }

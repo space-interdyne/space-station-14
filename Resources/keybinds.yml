@@ -548,11 +548,20 @@ binds:
 - function: ToggleKnockdown
   type: State
   key: C
+
 # SD edit start
 - function: ToggleRaiseShield
   type: State
   key: Space
+
 # SD edit end
+
+# Goobstation start
+- function: ResistGrab
+  type: State
+  key: B
+# Goobstation end
+
 - function: OpenAbilitiesMenu
   type: State
   key: K

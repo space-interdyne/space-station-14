@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using Content.Shared._SD.Input;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
+using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
+
+namespace Content.Shared._Goobstation.Grab;
+
+/// <summary>
+/// Binds the resist-grab key.
+/// </summary>
+public sealed partial class GrabReleaseBindSystem : EntitySystem
+{
+    [Dependency] private PullingSystem _pullingSystem = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+
+    public override void Initialize()
+    {
+        CommandBinds.Builder
+            .Bind(SDKeyFunctions.ResistGrab,
+                InputCmdHandler.FromDelegate(HandleResistGrab, handle: false, outsidePrediction: false))
+            .Register<GrabReleaseBindSystem>();
+    }
+
+    private void HandleResistGrab(ICommonSession? session)
+    {
+        if (session?.AttachedEntity == null || !TryComp<PullableComponent>(session.AttachedEntity, out var pullable))
+            return;
+
+        var uid = session.AttachedEntity.Value;
+        if (!_blocker.CanInteract(uid, null))
+            return;
+
+        _pullingSystem.TryStopPull(uid, pullable, uid);
+    }
+}

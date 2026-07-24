@@ -91,6 +91,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
                 // SD edit start
+                // IPC uses BorgHealth instead of HumanHealth.
                 var expectedHealthIDs = new[] { "HumanHealth", "BorgHealth" };
                 var expectedDebugIDs = new[] { "Debug1", "Debug2" };
 
@@ -113,7 +114,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
                 // SD edit start
-                var expectedHealthIDs = new[] { "HumanHealth", "BorgHealth" }; // SD edit
+                // IPC uses BorgHealth instead of HumanHealth.
+                var expectedHealthIDs = new[] { "HumanHealth", "BorgHealth" };
                 var expectedDebugIDs = new[] { "Debug2" };
 
                 Assert.That(alertIDs, Is.SupersetOf(expectedDebugIDs));

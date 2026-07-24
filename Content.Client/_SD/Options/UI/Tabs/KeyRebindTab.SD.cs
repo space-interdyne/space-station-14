@@ -8,5 +8,6 @@ public sealed partial class KeyRebindTab
     private static void AddSDKeybinds(Action<BoundKeyFunction> addButton)
     {
         addButton(SDKeyFunctions.ToggleRaiseShield);
+        addButton(SDKeyFunctions.ResistGrab);
     }
 }

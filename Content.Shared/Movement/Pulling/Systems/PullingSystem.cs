@@ -1,7 +1,9 @@
+using Content.Shared._SD.Grab; // SD
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
+using Content.Shared.CombatMode; // SD
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
@@ -23,6 +25,7 @@ using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Melee; // SD
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Physics;
@@ -53,6 +56,7 @@ public sealed partial class PullingSystem : EntitySystem
     [Dependency] private HeldSpeedModifierSystem _clothingMoveSpeed = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedVirtualItemSystem _virtual = default!;
+    [Dependency] private SharedCombatModeSystem _combatMode = default!; // SD
 
     public override void Initialize()
     {
@@ -209,7 +213,7 @@ public sealed partial class PullingSystem : EntitySystem
 
     private void OnPullableContainerInsert(Entity<PullableComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
-        TryStopPull(ent.Owner, ent.Comp);
+        TryStopPull(ent.Owner, ent.Comp, ignoreGrab: true); // SD
     }
 
     private void OnModifyUncuffDuration(Entity<PullableComponent> ent, ref ModifyUncuffDurationEvent args)
@@ -428,7 +432,7 @@ public sealed partial class PullingSystem : EntitySystem
             return;
         }
 
-        TryStopPull(pullerComp.Pulling.Value, pullableComp, user: player);
+        TryStopPull(pullerComp.Pulling.Value, pullableComp, user: player, ignoreGrab: true); // SD
     }
 
     public bool CanPull(EntityUid puller, EntityUid pullableUid, PullerComponent? pullerComp = null)
@@ -477,29 +481,35 @@ public sealed partial class PullingSystem : EntitySystem
         return !startPull.Cancelled && !getPulled.Cancelled;
     }
 
+    // SD-Edit-Start
+    public bool TogglePull(EntityUid pullerUid, PullerComponent puller)
+    {
+        return TryComp<PullableComponent>(puller.Pulling, out var pullable)
+            && TogglePull((puller.Pulling.Value, pullable), pullerUid);
+    }
+
     public bool TogglePull(Entity<PullableComponent?> pullable, EntityUid pullerUid)
     {
         if (!Resolve(pullable, ref pullable.Comp, false))
             return false;
 
-        if (pullable.Comp.Puller == pullerUid)
-        {
-            return TryStopPull(pullable, pullable.Comp);
-        }
+        if (pullable.Comp.Puller != pullerUid)
+            return TryStartPull(pullerUid, pullable, pullableComp: pullable.Comp);
 
-        return TryStartPull(pullerUid, pullable, pullableComp: pullable);
+        var grabAttemptEv = new GrabAttemptEvent(pullerUid);
+        RaiseLocalEvent(pullable, ref grabAttemptEv);
+        if (grabAttemptEv.Grabbed)
+            return true;
+
+        return !_combatMode.IsInCombatMode(pullable) && TryStopPull(pullable, pullable.Comp, ignoreGrab: true);
     }
 
-    public bool TogglePull(EntityUid pullerUid, PullerComponent puller)
-    {
-        if (!TryComp<PullableComponent>(puller.Pulling, out var pullable))
-            return false;
-
-        return TogglePull((puller.Pulling.Value, pullable), pullerUid);
-    }
-
-    public bool TryStartPull(EntityUid pullerUid, EntityUid pullableUid,
-        PullerComponent? pullerComp = null, PullableComponent? pullableComp = null)
+    public bool TryStartPull(EntityUid pullerUid,
+        EntityUid pullableUid,
+        PullerComponent? pullerComp = null,
+        PullableComponent? pullableComp = null,
+        GrabStage? grabStageOverride = null,
+        float escapeAttemptModifier = 1.0f)
     {
         if (!Resolve(pullerUid, ref pullerComp, false) ||
             !Resolve(pullableUid, ref pullableComp, false))
@@ -516,9 +526,13 @@ public sealed partial class PullingSystem : EntitySystem
         if (!TryComp(pullerUid, out PhysicsComponent? pullerPhysics) || !TryComp(pullableUid, out PhysicsComponent? pullablePhysics))
             return false;
 
+        if (TryComp<MeleeWeaponComponent>(pullerUid, out var meleeWeaponComponent)
+            && _timing.CurTime < meleeWeaponComponent.NextAttack)
+            return false;
+
         // Ensure that the puller is not currently pulling anything.
         if (TryComp<PullableComponent>(pullerComp.Pulling, out var oldPullable)
-            && !TryStopPull(pullerComp.Pulling.Value, oldPullable, pullerUid))
+            && !TryStopPull(pullerComp.Pulling.Value, oldPullable, pullerUid, ignoreGrab: true))
             return false;
 
         // Stop anyone else pulling the entity we want to pull
@@ -528,9 +542,39 @@ public sealed partial class PullingSystem : EntitySystem
             if (pullableComp.Puller == pullerUid)
                 return false;
 
-            if (!TryStopPull(pullableUid, pullableComp, pullableComp.Puller))
+            var currentPuller = pullableComp.Puller.Value;
+
+            if (!TryStopPull(pullableUid, pullableComp, currentPuller))
+            {
+                _popup.PopupPredicted(Loc.GetString("popup-grab-retake-fail",
+                        ("puller", Identity.Entity(currentPuller, EntityManager)),
+                        ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                    pullerUid,
+                    pullerUid,
+                    PopupType.MediumCaution);
+                _popup.PopupPredicted(Loc.GetString("popup-grab-retake-fail-puller",
+                        ("puller", Identity.Entity(pullerUid, EntityManager)),
+                        ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                    currentPuller,
+                    currentPuller,
+                    PopupType.MediumCaution);
                 return false;
+            }
+
+            _popup.PopupPredicted(Loc.GetString("popup-grab-retake-success",
+                    ("puller", Identity.Entity(currentPuller, EntityManager)),
+                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                pullerUid,
+                pullerUid,
+                PopupType.MediumCaution);
+            _popup.PopupPredicted(Loc.GetString("popup-grab-retake-success-puller",
+                    ("puller", Identity.Entity(pullerUid, EntityManager)),
+                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                currentPuller,
+                currentPuller,
+                PopupType.MediumCaution);
         }
+    // SD-Edit-End
 
         var pullAttempt = new PullAttemptEvent(pullerUid, pullableUid);
         RaiseLocalEvent(pullerUid, pullAttempt);
@@ -580,8 +624,8 @@ public sealed partial class PullingSystem : EntitySystem
         // Messaging
         var message = new PullStartedMessage(pullerUid, pullableUid);
         _modifierSystem.RefreshMovementSpeedModifiers(pullerUid);
-        _alertsSystem.ShowAlert(pullerUid, pullerComp.PullingAlert);
-        _alertsSystem.ShowAlert(pullableUid, pullableComp.PulledAlert);
+        _alertsSystem.ShowAlert(pullerUid, pullerComp.PullingAlert, 0); // SD
+        _alertsSystem.ShowAlert(pullableUid, pullableComp.PulledAlert, 0); // SD
 
         RaiseLocalEvent(pullerUid, message);
         RaiseLocalEvent(pullableUid, message);
@@ -595,10 +639,15 @@ public sealed partial class PullingSystem : EntitySystem
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
             $"{ToPrettyString(pullerUid):user} started pulling {ToPrettyString(pullableUid):target}");
+
+        // SD-Edit-Start
+        var ev = new GrabAttemptEvent(pullerUid, GrabStageOverride: grabStageOverride, EscapeAttemptModifier: escapeAttemptModifier);
+        RaiseLocalEvent(pullableUid, ref ev);
+        // SD-Edit-End
         return true;
     }
 
-    public bool TryStopPull(EntityUid pullableUid, PullableComponent pullable, EntityUid? user = null)
+    public bool TryStopPull(EntityUid pullableUid, PullableComponent pullable, EntityUid? user = null, bool ignoreGrab = false)
     {
         var pullerUidNull = pullable.Puller;
 
@@ -610,6 +659,16 @@ public sealed partial class PullingSystem : EntitySystem
 
         if (msg.Cancelled)
             return false;
+
+        // SD-Edit-Start
+        if (!ignoreGrab)
+        {
+            var tryReleaseEv = new GrabAttemptReleaseEvent(user, pullerUidNull.Value);
+            RaiseLocalEvent(pullableUid, ref tryReleaseEv);
+            if (!tryReleaseEv.Released)
+                return false;
+        }
+        // SD-Edit-End
 
         StopPulling(pullableUid, pullable);
         return true;

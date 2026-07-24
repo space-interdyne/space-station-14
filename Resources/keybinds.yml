@@ -552,6 +552,9 @@ binds:
 - function: ToggleRaiseShield
   type: State
   key: Space
+- function: ResistGrab
+  type: State
+  key: B
 # SD edit end
 - function: OpenAbilitiesMenu
   type: State

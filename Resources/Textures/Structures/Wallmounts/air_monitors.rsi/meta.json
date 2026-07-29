@@ -7,16 +7,6 @@
     "y": 32
   },
   "states": [
-    {
-      "name": "alarm0",
-	  "directions": 1,
-      "delays": [
-        [
-          2.8,
-          2.8
-        ]
-      ]
-    },
         {
             "name": "alarm0",
             "delays": [

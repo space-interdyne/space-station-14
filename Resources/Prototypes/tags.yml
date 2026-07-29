@@ -1183,6 +1183,9 @@
   id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
 
 - type: Tag
+  id: PreventLabel # Used by Nyanotrasen pseudo-item systems to block labels while item is pseudo-inserted.
+
+- type: Tag
   id: PreventPortalCollision # Used by PortalSystem to prevent portal traversal on collision.
 
 - type: Tag

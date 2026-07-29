@@ -125,8 +125,7 @@
     price: 75
   - type: Sprite
     drawdepth: WallMountedItems
-    # Wallcloset RSI has authored N/E/S/W frames; don't rotate the south sheet.
-    noRot: true
+    noRot: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
@@ -190,7 +189,6 @@
   - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/wall_locker.rsi
-    noRot: true
     layers:
     - state: generic
       map: ["enum.StorageVisualLayers.Base"]

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Shiptest at https://github.com/shiptest-ss13/Shiptest and converted for Space Station 14",
+  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/b7ac5798ae0d411b0cdeaf7efbc4ac86d24b4634, fire_emagged.png edited by github:Morb0, updated by SonicHDC",
   "size": {
     "x": 32,
     "y": 32
@@ -9,15 +9,39 @@
   "states": [
     {
       "name": "alarm0",
-      "directions": 1
+	  "directions": 1,
+      "delays": [
+        [
+          2.8,
+          2.8
+        ]
+      ]
     },
     {
       "name": "alarm1",
-      "directions": 1,
+	  "directions": 1,
       "delays": [
         [
-          0.5,
-          0.5
+          0.6,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.6,
+          0.6,
+          0.6
         ]
       ]
     },
@@ -26,8 +50,20 @@
       "directions": 1,
       "delays": [
         [
-          0.5,
-          0.5
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
         ]
       ]
     },
@@ -53,11 +89,22 @@
     },
     {
       "name": "auth_off",
-      "directions": 1
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
     },
     {
       "name": "auth_on",
-      "directions": 1
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
       "name": "fire0",
@@ -86,8 +133,8 @@
       "directions": 1,
       "delays": [
         [
-          0.5,
-          0.5
+          0.3,
+          0.3
         ]
       ]
     },
@@ -112,12 +159,8 @@
       "directions": 1,
       "delays": [
         [
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5
+          0.3,
+          0.3
         ]
       ]
     },
@@ -130,8 +173,12 @@
       "directions": 1,
       "delays": [
         [
-          0.5,
-          0.5
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
         ]
       ]
     },

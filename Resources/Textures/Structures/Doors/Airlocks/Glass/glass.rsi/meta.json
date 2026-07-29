@@ -1,52 +1,20 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Shiptest at https://github.com/shiptest-ss13/Shiptest and converted for Space Station 14",
+  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fd5cfd76acdf5bda9e46413c11006a6e825d51a9, panel_open fixed by @mishutka09(discord:1152277579206774854)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "closed"
-    },
-    {
-      "name": "open"
-    },
-    {
       "name": "assembly"
     },
     {
-      "name": "opening",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ]
-      ]
+      "name": "assembly-fill"
     },
     {
-      "name": "closing",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "closed_unlit"
-    },
-    {
-      "name": "open_unlit"
+      "name": "assembly-glass"
     },
     {
       "name": "bolted_unlit"
@@ -55,22 +23,19 @@
       "name": "bolted_open_unlit"
     },
     {
-      "name": "emergency_unlit"
+      "name": "closed"
     },
     {
-      "name": "emergency_open_unlit"
+      "name": "closed_unlit"
     },
     {
-      "name": "welded"
+      "name": "closed-fill"
     },
     {
-      "name": "panel_closed"
+      "name": "closed-glass"
     },
     {
-      "name": "panel_open"
-    },
-    {
-      "name": "opening_unlit",
+      "name": "closing",
       "delays": [
         [
           0.1,
@@ -96,7 +61,20 @@
       ]
     },
     {
-      "name": "panel_opening",
+      "name": "closing-fill",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "closing-glass",
       "delays": [
         [
           0.1,
@@ -127,14 +105,96 @@
         [
           0.1,
           0.1,
-          0.1,
-          0.1,
           0.1
         ]
       ]
     },
     {
-      "name": "sparks"
+      "name": "open"
+    },
+    {
+      "name": "open_unlit"
+    },
+    {
+      "name": "panel_open"
+    },
+    {
+      "name": "opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "opening_unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "opening-fill",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "opening-glass",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "panel_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "sparks",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
       "name": "sparks_broken",
@@ -145,7 +205,8 @@
           0.1,
           0.1,
           0.1,
-          0.1
+          0.1,
+          1.7
         ]
       ]
     },
@@ -153,7 +214,6 @@
       "name": "sparks_damaged",
       "delays": [
         [
-          0.1,
           0.1,
           0.1,
           0.1,
@@ -177,74 +237,19 @@
       ]
     },
     {
-      "name": "closed-fill"
+      "name": "welded"
     },
     {
-      "name": "open-fill"
-    },
-    {
-      "name": "assembly-fill"
-    },
-    {
-      "name": "opening-fill",
+      "name": "emergency_unlit",
       "delays": [
         [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
+          1.2,
+          1.2
         ]
       ]
     },
     {
-      "name": "closing-fill",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "closed-glass"
-    },
-    {
-      "name": "open-glass"
-    },
-    {
-      "name": "assembly-glass"
-    },
-    {
-      "name": "opening-glass",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "closing-glass",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ]
-      ]
+      "name": "emergency_open_unlit"
     }
   ]
 }

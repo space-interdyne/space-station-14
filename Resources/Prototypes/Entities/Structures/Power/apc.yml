@@ -24,7 +24,6 @@
     access: [["Engineering"]]
   - type: Sprite
     drawdepth: WallMountedItems
-    noRot: true
     sprite: Structures/Power/apc.rsi
     layers:
     - state: base
@@ -162,7 +161,6 @@
   components:
   - type: Sprite
     sprite: Structures/Power/apc.rsi
-    noRot: true
     state: frame
   - type: Construction
     graph: APC

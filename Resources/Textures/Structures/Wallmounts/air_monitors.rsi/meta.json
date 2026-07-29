@@ -17,9 +17,6 @@
         ]
       ]
     },
-    "copyright": "Taken from tgstation, modified for SS14",
-    "license": "CC-BY-SA-3.0",
-    "states": [
         {
             "name": "alarm0",
             "delays": [

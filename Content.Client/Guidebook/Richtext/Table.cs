@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.Guidebook.Richtext;
 
 [UsedImplicitly]
-public sealed class Table : TableContainer, IDocumentTag
+public sealed class Table : GridContainer, IDocumentTag
 {
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
     {

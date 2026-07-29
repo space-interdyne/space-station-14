@@ -7,6 +7,7 @@
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -26,6 +27,7 @@
   - HoPBackpack
   - HoPOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -59,6 +61,7 @@
   - PassengerOuterClothing
   - PassengerShoes
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -77,6 +80,7 @@
   - CommonBackpack
   - BartenderOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -93,6 +97,7 @@
   - BartenderJumpsuit
   - CommonBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -112,6 +117,7 @@
   - CommonBackpack
   - ChefOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -128,6 +134,7 @@
   - LibrarianJumpsuit
   - CommonBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -145,6 +152,7 @@
   - LawyerJumpsuit
   - CommonBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -167,6 +175,7 @@
   - ChaplainOuterClothing
   - ChaplainBible
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -186,6 +195,7 @@
   - CommonBackpack
   - JanitorOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -204,6 +214,7 @@
   - BotanistBackpack
   - BotanistOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -224,6 +235,7 @@
   - ClownOuterClothing
   - ClownShoes
   - Glasses
+  - AssistiveItems
   - SurvivalClown
   - Undershirt
   - Underwear
@@ -244,11 +256,8 @@
   - MimeOuterClothing
   - MimeBelt
   - Glasses
-  - SurvivalMime
-  - Undershirt
-  - Underwear
-  - Socks
-  - Wrists
+  - AssistiveItems
+  - Survival
   - Trinkets
   #- MimeJobTrinkets
 
@@ -260,7 +269,9 @@
   - MusicianJumpsuit
   - CommonBackpack
   - MusicianOuterClothing
+  - Instruments
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -268,7 +279,6 @@
   - Wrists
   - Trinkets
   #- MusicianJobTrinkets
-  - Instruments
   - GroupSpeciesBreathTool
 
 # Cargo
@@ -283,6 +293,7 @@
   - QuartermasterOuterClothing
   - QuartermasterShoes
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -303,6 +314,7 @@
   - CargoTechnicianShoes
   - CargoTechnicianID
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -320,6 +332,7 @@
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -340,6 +353,7 @@
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
+  - AssistiveItems
   - SurvivalExtended
   - Undershirt
   - Underwear
@@ -355,6 +369,7 @@
   - GroupTankHarness
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
+  - AssistiveItems
   - SurvivalExtended
   - Undershirt
   - Underwear
@@ -374,6 +389,7 @@
   - StationEngineerOuterClothing
   - StationEngineerShoes
   - StationEngineerID
+  - AssistiveItems
   - SurvivalExtended
   - Undershirt
   - Underwear
@@ -391,6 +407,7 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
+  - AssistiveItems
   - SurvivalExtended
   - Undershirt
   - Underwear
@@ -413,6 +430,7 @@
   - ScientistGloves
   - ResearchDirectorShoes
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -435,6 +453,7 @@
   - ScientistShoes
   - ScientistPDA
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -451,6 +470,7 @@
   - ResearchAssistantJumpsuit
   - ScientistBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -471,6 +491,7 @@
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - SecurityShoes
+  - AssistiveItems
   - SurvivalSecurity
   - Undershirt
   - Underwear
@@ -489,6 +510,7 @@
   - SecurityBelt
   - WardenOuterClothing
   - SecurityShoes
+  - AssistiveItems
   - SurvivalSecurity
   - Undershirt
   - Underwear
@@ -508,6 +530,7 @@
   - SecurityShoes
   - SecurityPDA
   - SecurityBelt
+  - AssistiveItems
   - SurvivalSecurity
   - Undershirt
   - Underwear
@@ -526,6 +549,7 @@
   - SecurityBackpack
   - DetectiveOuterClothing
   - SecurityShoes
+  - AssistiveItems
   - SurvivalSecurity
   - Undershirt
   - Underwear
@@ -540,6 +564,7 @@
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack
+  - AssistiveItems
   - SurvivalSecurity
   - Undershirt
   - Underwear
@@ -559,6 +584,7 @@
   - ReporterOuterClothing
   - CommonBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -575,6 +601,7 @@
   - PsychologistJumpsuit
   - MedicalBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Undershirt
   - Underwear
@@ -643,6 +670,13 @@
   - GroupTankHarness
 
 - type: roleLoadout
+  id: RoleSurvivalExtendedAntag # Used by antagonists that spawn off-station (e.g wizards)
+  groups:
+  - SurvivalExtendedAntag
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+
+- type: roleLoadout
   id: RoleSurvivalMedical
   groups:
   - SurvivalMedical
@@ -704,6 +738,12 @@
   - Underwear
   - Socks
   - Wrists
+
+- type: roleLoadout
+  id: RoleSurvivalEVAAntag # Used by antagonists that spawn off-station AND in space (e.g ninjas)
+  groups:
+  - GroupEVATank
+  - SurvivalExtendedAntag
 
 - type: roleLoadout
   id: RoleSurvivalSpaceNinja

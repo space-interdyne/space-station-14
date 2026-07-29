@@ -1,52 +1,14 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Shiptest at https://github.com/shiptest-ss13/Shiptest and converted for Space Station 14",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/a406e8388f763e496caac32c3cf11e455b20d28d/icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi and https://github.com/tgstation/tgstation/blob/a406e8388f763e496caac32c3cf11e455b20d28d/icons/obj/doors/airlocks/clockwork/overlays.dmi modified for SS14 by MACMAN2003",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "closed"
-    },
-    {
-      "name": "open"
-    },
-    {
       "name": "assembly"
-    },
-    {
-      "name": "opening",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "closing",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "closed_unlit"
-    },
-    {
-      "name": "open_unlit"
     },
     {
       "name": "bolted_unlit"
@@ -55,22 +17,16 @@
       "name": "bolted_open_unlit"
     },
     {
-      "name": "emergency_unlit"
+      "name": "closed"
+    },
+	{
+	  "name": "closed_unlit"
+	},
+    {
+      "name": "open_unlit"
     },
     {
-      "name": "emergency_open_unlit"
-    },
-    {
-      "name": "welded"
-    },
-    {
-      "name": "panel_closed"
-    },
-    {
-      "name": "panel_open"
-    },
-    {
-      "name": "opening_unlit",
+      "name": "closing",
       "delays": [
         [
           0.1,
@@ -96,7 +52,41 @@
       ]
     },
     {
-      "name": "panel_opening",
+      "name": "deny_unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+	{
+	  "name": "open",
+	  "delays": [
+	    [
+		  1
+		]
+	  ]
+	},
+    {
+      "name": "opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+	{
+      "name": "opening_unlit",
       "delays": [
         [
           0.1,
@@ -122,14 +112,38 @@
       ]
     },
     {
-      "name": "deny_unlit",
+      "name": "panel_closed"
+    },
+    {
+      "name": "panel_open",
+      "delays": [
+        [
+          0.4,
+          0.04,
+          0.07,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.07,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "panel_opening",
       "delays": [
         [
           0.1,
           0.1,
-          0.1,
-          0.1,
-          0.1
+          0.07,
+          0.07,
+          0.07,
+          0.2
         ]
       ]
     },
@@ -147,13 +161,19 @@
       ]
     },
     {
-      "name": "sparks_broken"
+      "name": "welded"
     },
     {
-      "name": "sparks_damaged"
+      "name": "emergency_unlit",
+      "delays": [
+        [
+          0.4,
+          0.4
+        ]
+      ]
     },
     {
-      "name": "sparks_open"
+      "name": "emergency_open_unlit"
     }
   ]
 }

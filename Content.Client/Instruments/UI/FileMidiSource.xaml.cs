@@ -199,18 +199,22 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             // TODO: Once the file dialogue manager can handle focusing or closing windows, improve this logic to close
             //  or focus the previously-opened window.
             _isMidiFileDialogueWindowOpen = true;
-            var (stream, name) = await _dialogs.GetFileAndName(filters, FileAccess.Read);
+            var stream = await _dialogs.OpenFile(filters, FileAccess.Read);
+            if (stream is null)
+                return;
+
             await using (stream)
             {
                 // did the instrument menu get closed while waiting for the user to select a file?
                 if (Disposed)
                     return;
 
-                if (stream == null)
-                    return;
+                var fileName = stream is FileStream fileStream
+                    ? Path.GetFileName(fileStream.Name)
+                    : null;
 
-                if (name != null)
-                    await _midiCollection.AddMidiFile(new ResPath(name), stream);
+                if (!string.IsNullOrEmpty(fileName))
+                    await _midiCollection.AddMidiFile(new ResPath(fileName), stream);
             }
         }
         catch

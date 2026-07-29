@@ -56,12 +56,14 @@ namespace Content.Server.Sandbox.Commands
                 return;
             }
 
-            if (!Color.TryFromHex(args[2], out var color))
+            var colorNullable = Color.TryFromHex(args[2]);
+            if (colorNullable is null)
             {
                 shell.WriteError(Loc.GetString("shell-invalid-color-hex"));
                 return;
             }
 
+            var color = colorNullable.Value;
             PaintNodes(nodeContainerComponent, nodeGroupId, color);
         }
 

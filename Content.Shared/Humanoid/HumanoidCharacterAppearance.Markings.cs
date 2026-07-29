@@ -42,13 +42,61 @@ public sealed partial class HumanoidCharacterAppearance
     {
         var list = strategy switch
         {
-            0 => baseColor.GetSplitComplementaries(),
-            1 => baseColor.GetTriadicComplementaries(),
-            2 => baseColor.GetAnalogousComplementaries(),
-            _ => baseColor.GetOneComplementary(),
+            0 => GetSplitComplementaries(baseColor),
+            1 => GetTriadicComplementaries(baseColor),
+            2 => GetAnalogousComplementaries(baseColor),
+            _ => GetOneComplementary(baseColor),
         };
 
         return new(list[0], list[1], list[2]);
+    }
+
+    private static List<Color> GetSplitComplementaries(Color baseColor)
+    {
+        return new()
+        {
+            baseColor,
+            ShiftHue(baseColor, 150f / 360f),
+            ShiftHue(baseColor, 210f / 360f),
+        };
+    }
+
+    private static List<Color> GetTriadicComplementaries(Color baseColor)
+    {
+        return new()
+        {
+            baseColor,
+            ShiftHue(baseColor, 120f / 360f),
+            ShiftHue(baseColor, 240f / 360f),
+        };
+    }
+
+    private static List<Color> GetAnalogousComplementaries(Color baseColor)
+    {
+        return new()
+        {
+            baseColor,
+            ShiftHue(baseColor, 30f / 360f),
+            ShiftHue(baseColor, -30f / 360f),
+        };
+    }
+
+    private static List<Color> GetOneComplementary(Color baseColor)
+    {
+        var complementary = ShiftHue(baseColor, 180f / 360f);
+        return new()
+        {
+            baseColor,
+            complementary,
+            complementary,
+        };
+    }
+
+    private static Color ShiftHue(Color color, float hueOffset)
+    {
+        var hsv = Color.ToHsv(color);
+        hsv.X = MathHelper.Mod(hsv.X + hueOffset, 1f);
+        return Color.FromHsv(hsv);
     }
 
     /// <summary>

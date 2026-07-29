@@ -28,11 +28,14 @@ namespace Content.Server.Administration.Commands
             if (string.IsNullOrEmpty(colorArg))
                 return;
 
-            if (!Color.TryFromHex(colorArg, out var color))
+            var colorNullable = Color.TryFromHex(colorArg);
+            if (colorNullable is null)
             {
                 shell.WriteError(Loc.GetString("shell-invalid-color-hex"));
                 return;
             }
+
+            var color = colorNullable.Value;
 
             var userId = shell.Player.UserId;
             // Save the DB

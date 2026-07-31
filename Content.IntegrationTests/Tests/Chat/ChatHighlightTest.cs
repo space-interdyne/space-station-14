@@ -1,6 +1,9 @@
 #nullable enable
+using System; // SD
 using System.Collections.Generic;
+using System.Linq; // SD
 using System.Reflection;
+using System.Text.RegularExpressions; // SD
 using System.Threading.Tasks;
 using Content.Client.CharacterInfo;
 using Content.Client.UserInterface.Systems.Chat;
@@ -11,6 +14,7 @@ using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
+using Robust.Shared.Localization; // SD
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Chat;
@@ -19,6 +23,7 @@ public sealed class ChatHighlightTest : GameTest
 {
     [SidedDependency(Side.Client)] private readonly IConfigurationManager _configManager = null!;
     [SidedDependency(Side.Client)] private readonly IUserInterfaceManager _uiManager = null!;
+    [SidedDependency(Side.Client)] private readonly ILocalizationManager _localization = null!; // SD edit
     private static readonly ProtoId<JobPrototype> Captain = "Captain";
 
     [Test]
@@ -80,9 +85,7 @@ public sealed class ChatHighlightTest : GameTest
         // Custom:
         Assert.That(activeHighlights, Contains.Item("ling"));
         Assert.That(activeHighlights, Contains.Item("rev"));
-        // Auto:
-        Assert.That(activeHighlights, Contains.Item("Captain"));
-        Assert.That(activeHighlights, Contains.Item("(?<!\\w)Cap(?!\\w)")); // "Cap" becomes regex-escaped and word-bounded
+        AssertContainsJobAutoHighlights(activeHighlights); // SD edit
 
         // 5. Disable auto-fill highlights and verify auto-filled highlights are removed
         _configManager.SetCVar(CCVars.ChatAutoFillHighlights, false);
@@ -90,7 +93,7 @@ public sealed class ChatHighlightTest : GameTest
         activeHighlights = (List<string>)highlightsField.GetValue(chatController)!;
         Assert.That(activeHighlights, Contains.Item("ling"));
         Assert.That(activeHighlights, Contains.Item("rev"));
-        Assert.That(activeHighlights, Is.Not.Contains("Captain"));
+        AssertDoesNotContainJobAutoHighlights(activeHighlights); // SD
     }
 
     [Test]
@@ -155,7 +158,49 @@ public sealed class ChatHighlightTest : GameTest
         activeHighlights = (List<string>)highlightsField.GetValue(chatController)!;
         Assert.That(activeHighlights, Contains.Item("ling"));
         Assert.That(activeHighlights, Contains.Item("rev"));
-        Assert.That(activeHighlights, Contains.Item("Captain"));
-        Assert.That(activeHighlights, Contains.Item("(?<!\\w)Cap(?!\\w)"));
+
+        AssertContainsJobAutoHighlights(activeHighlights); // SD
+    }
+
+    // SD edit start
+
+    private static readonly Regex StartDoubleQuote = new("\"$");
+    private static readonly Regex EndDoubleQuote = new("^\"|(?<=^@)\"");
+
+    /// <summary>
+    /// Asserts that captain job auto-fill keywords from the active culture are present.
+    /// Mirrors the keyword processing in <c>ChatUIController.ReloadHighlights</c>.
+    /// </summary>
+    private void AssertContainsJobAutoHighlights(List<string> activeHighlights)
+    {
+        Assert.That(_localization.TryGetString("highlights-captain", out var jobMatches), Is.True);
+        var keywords = jobMatches.Split(", ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        Assert.That(keywords, Is.Not.Empty);
+
+        var unquoted = keywords.FirstOrDefault(k => !k.Contains('"'));
+        var quoted = keywords.FirstOrDefault(k => k.Contains('"'));
+
+        Assert.That(unquoted, Is.Not.Null);
+        Assert.That(activeHighlights, Contains.Item(Regex.Escape(unquoted!)));
+
+        if (quoted is not null)
+        {
+            var keyword = Regex.Escape(quoted);
+            keyword = StartDoubleQuote.Replace(keyword, "(?!\\w)");
+            keyword = EndDoubleQuote.Replace(keyword, "(?<!\\w)");
+            Assert.That(activeHighlights, Contains.Item(keyword));
+        }
+    }
+
+    private void AssertDoesNotContainJobAutoHighlights(List<string> activeHighlights)
+    {
+        Assert.That(_localization.TryGetString("highlights-captain", out var jobMatches), Is.True);
+        var unquoted = jobMatches
+            .Split(", ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .FirstOrDefault(k => !k.Contains('"'));
+
+        Assert.That(unquoted, Is.Not.Null);
+        Assert.That(activeHighlights, Is.Not.Contains(Regex.Escape(unquoted!)));
+    // SD edit end
     }
 }

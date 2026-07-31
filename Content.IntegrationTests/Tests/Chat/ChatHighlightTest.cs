@@ -173,15 +173,25 @@ public sealed class ChatHighlightTest : GameTest
     /// </summary>
     private void AssertContainsJobAutoHighlights(List<string> activeHighlights)
     {
-        Assert.That(_localization.TryGetString("highlights-captain", out var jobMatches), Is.True);
+        if (!_localization.TryGetString("highlights-captain", out var jobMatches))
+        {
+            Assert.Fail("Missing highlights-captain localization");
+            return;
+        }
+
         var keywords = jobMatches.Split(", ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         Assert.That(keywords, Is.Not.Empty);
 
         var unquoted = keywords.FirstOrDefault(k => !k.Contains('"'));
         var quoted = keywords.FirstOrDefault(k => k.Contains('"'));
 
-        Assert.That(unquoted, Is.Not.Null);
-        Assert.That(activeHighlights, Contains.Item(Regex.Escape(unquoted!)));
+        if (unquoted is null)
+        {
+            Assert.Fail("highlights-captain has no unquoted keyword");
+            return;
+        }
+
+        Assert.That(activeHighlights, Contains.Item(Regex.Escape(unquoted)));
 
         if (quoted is not null)
         {
@@ -194,13 +204,23 @@ public sealed class ChatHighlightTest : GameTest
 
     private void AssertDoesNotContainJobAutoHighlights(List<string> activeHighlights)
     {
-        Assert.That(_localization.TryGetString("highlights-captain", out var jobMatches), Is.True);
+        if (!_localization.TryGetString("highlights-captain", out var jobMatches))
+        {
+            Assert.Fail("Missing highlights-captain localization");
+            return;
+        }
+
         var unquoted = jobMatches
             .Split(", ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .FirstOrDefault(k => !k.Contains('"'));
 
-        Assert.That(unquoted, Is.Not.Null);
-        Assert.That(activeHighlights, Is.Not.Contains(Regex.Escape(unquoted!)));
+        if (unquoted is null)
+        {
+            Assert.Fail("highlights-captain has no unquoted keyword");
+            return;
+        }
+
+        Assert.That(activeHighlights, Is.Not.Contains(Regex.Escape(unquoted)));
     // SD edit end
     }
 }

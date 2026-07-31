@@ -6,7 +6,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    icon: Nyanotrasen/Icons/verbiconfangs.png
+  - type: Sprite
+    layers:
+    - texture: Nyanotrasen/Icons/verbiconfangs.png
   - type: InstantAction
     event: !type:EatMouseActionEvent
 
@@ -18,8 +20,11 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    icon: { sprite: Nyanotrasen/Objects/Specific/Species/felinid.rsi, state: icon }
     useDelay: 30
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Specific/Species/felinid.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:HairballActionEvent
   - type: LimitedCharges

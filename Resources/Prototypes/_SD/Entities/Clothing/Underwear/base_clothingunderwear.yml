@@ -32,7 +32,7 @@
       - ReagentId: Fiber
         Quantity: 10
   - type: TemperatureProtection
-    heatingCoefficient: 0.90
+    coefficient: 0.90
   - type: Tag
     tags:
     - ClothMade

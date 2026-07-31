@@ -239,7 +239,7 @@
     - Ipc
 ###
   - type: Temperature
-    currentTemperature: 310.15
+    temperature: 310.15
     specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 325
@@ -338,9 +338,11 @@
       map: ["base"]
 
 - type: entity
-  parent: [ OrganBase ]
+  parent: [ OrganBase, OrganBaseChildInternal, OrganIpc ]
   id: OrganIPCEyes
   components:
+  - type: Organ
+    category: Eyes
   - type: Sprite
     sprite: Objects/Misc/proximity_sensor.rsi
     state: icon

@@ -3,7 +3,6 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Stack;
-using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using static Content.IntegrationTests.Tests.Stacks.StackTestPrototypes;
 
@@ -16,9 +15,10 @@ public sealed class StackTest : GameTest
     [SidedDependency(Side.Server)] private readonly StackSystem _sStackSystem = default!;
 
     [Test]
-    [Description("Tests for SharedStackSystem.SetCount .")]
+    [Description("Tests for SharedStackSystem.SetCount.")]
     public async Task SetTest()
     {
+        var baseEntityCount = SEntMan.EntityCount; // SD edit
         var stack = await Spawn(StackEnt1);
 
         // Raising the count
@@ -26,23 +26,24 @@ public sealed class StackTest : GameTest
         Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(2));
 
         // Lowering the count
-        await Server.WaitPost(() =>_sStackSystem.SetCount((stack, null), 1));
+        await Server.WaitPost(() => _sStackSystem.SetCount((stack, null), 1));
         Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(1));
 
         // Setting above the max count clamps to max
-        await Server.WaitPost(() =>_sStackSystem.SetCount((stack, null), 31));
+        await Server.WaitPost(() => _sStackSystem.SetCount((stack, null), 31));
         Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(30));
 
         // Setting to 0 deletes the stack
-        await Server.WaitPost(() =>_sStackSystem.SetCount((stack, null), 0));
+        await Server.WaitPost(() => _sStackSystem.SetCount((stack, null), 0));
         await Server.WaitRunTicks(1);
-        Assert.That(SEntMan.EntityCount, Is.Zero);
+        Assert.That(SEntMan.EntityCount, Is.EqualTo(baseEntityCount)); // SD edit
     }
 
     [Test]
     [Description("Tests that SharedStackSystem.MergeStacks functions as expected with small numbers.")]
     public async Task MergeTest()
     {
+        var baseEntityCount = SEntMan.EntityCount; // SD edit
         var stacks = new HashSet<EntityUid>();
 
         await Server.WaitPost(() =>
@@ -67,7 +68,7 @@ public sealed class StackTest : GameTest
             Assert.That(_sStackSystem.GetCount(stacks.First()), Is.EqualTo(3));
 
             // Assert that the other stack was set to zero and deleted
-            Assert.That(SEntMan.EntityCount, Is.EqualTo(1));
+            Assert.That(SEntMan.EntityCount, Is.EqualTo(baseEntityCount + 1)); // SD edit
         }
     }
 
@@ -75,16 +76,17 @@ public sealed class StackTest : GameTest
     [Description("Tests that SharedStackSystem.MergeStacks functions as expected with large numbers.")]
     public async Task MergeOverflowTest()
     {
+        var baseEntityCount = SEntMan.EntityCount; // SD edit
         var stacks = new HashSet<EntityUid>();
 
         await Server.WaitPost(() =>
         {
-             stacks =
-             [
-                 SSpawn(StackEnt1),
-                 SSpawn(StackEnt2),
-                 SSpawn(StackEnt30),
-             ];
+            stacks =
+            [
+                SSpawn(StackEnt1),
+                SSpawn(StackEnt2),
+                SSpawn(StackEnt30),
+            ];
 
             _sStackSystem.MergeStacks(ref stacks);
         });
@@ -106,7 +108,7 @@ public sealed class StackTest : GameTest
             // Assert that both stacks were returned
             // And that the empty stack was deleted
             Assert.That(stacks, Has.Count.EqualTo(2));
-            Assert.That(SEntMan.EntityCount, Is.EqualTo(2));
+            Assert.That(SEntMan.EntityCount, Is.EqualTo(baseEntityCount + 2)); // SD edit
 
             // Assert we have the same count as what we spawned
             Assert.That(count, Is.EqualTo(33));
@@ -124,7 +126,7 @@ public sealed class StackTest : GameTest
         var donor = await SpawnAtPosition(StackEnt1, map.GridCoords);
         var receiver = await SpawnAtPosition(StackEnt1, map.GridCoords);
 
-        _sStackSystem.TryMergeToContacts(donor);
+        await Server.WaitPost(() => _sStackSystem.TryMergeToContacts(donor));
 
         // Wait for queue deletion
         await Server.WaitRunTicks(1);

@@ -29,11 +29,29 @@ public abstract partial class SharedSuicideSystem : EntitySystem
         // grabbing the last key will give us how much damage is needed to kill a target from zero
         // The exact lethal damage amount is adjusted based on their current damage taken
         var lethalAmountOfDamage = mobThresholds.Thresholds.Keys.Last() - _damageableSystem.GetTotalDamage(target.AsNullable());
-        var totalDamage = appliedDamageSpecifier.GetTotal();
 
         // Removing structural because it causes issues against entities that cannot take structural damage,
         // then getting the total to use in calculations for spreading out damage.
         appliedDamageSpecifier.DamageDict.Remove("Structural");
+
+        // SD edit start
+        if (TryComp<InjurableComponent>(target, out var injurable))
+        {
+            foreach (var type in appliedDamageSpecifier.DamageDict.Keys.ToList())
+            {
+                if (!_damageableSystem.CanBeDamagedBy((target.Owner, injurable), type))
+                    appliedDamageSpecifier.DamageDict.Remove(type);
+            }
+        }
+
+        if (appliedDamageSpecifier.Empty)
+        {
+            ApplyLethalDamage(target, FallbackDamageType);
+            return;
+        }
+
+        var totalDamage = appliedDamageSpecifier.GetTotal();
+        // SD edit end
 
         // Split the total amount of damage needed to kill the target by every damage type in the DamageSpecifier
         foreach (var (key, value) in appliedDamageSpecifier.DamageDict)
@@ -63,6 +81,14 @@ public abstract partial class SharedSuicideSystem : EntitySystem
             Log.Error($"{nameof(SharedSuicideSystem)} could not find the damage type prototype associated with {damageType}. Falling back to {FallbackDamageType}");
             damagePrototype = ProtoMan.Index(FallbackDamageType);
         }
+
+        // SD edit start
+        if (TryComp<InjurableComponent>(target, out var injurable)
+            && !_damageableSystem.CanBeDamagedBy((target.Owner, injurable), damagePrototype.ID))
+        {
+            damagePrototype = ProtoMan.Index(FallbackDamageType);
+        }
+        // SD edit end
 
         var damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
         _damageableSystem.ChangeDamage(target.AsNullable(), damage, true, origin: target);

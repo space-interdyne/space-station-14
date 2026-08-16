@@ -138,6 +138,26 @@ public abstract partial class SharedEmpSystem : EntitySystem
         return ev.Affected;
     }
 
+    // SD edit start
+    public void EmpPulseExclusions(MapCoordinates coordinates, float range, float energyConsumption, TimeSpan duration, IEnumerable<EntityUid> exclusions, EntityUid? user = null)
+    {
+        var exclusionsSet = new HashSet<EntityUid>(exclusions);
+        foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
+        {
+            if (exclusionsSet.Contains(uid))
+                continue;
+
+            TryEmpEffects(uid, energyConsumption, duration, user);
+        }
+
+        if (_net.IsServer)
+            Spawn(EmpPulseEffectPrototype, coordinates);
+
+        var entityCoords = _transform.ToCoordinates(coordinates);
+        _audio.PlayPredicted(EmpSound, entityCoords, user);
+    }
+    // SD edit end
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

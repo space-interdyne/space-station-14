@@ -1,0 +1,28 @@
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodCultrobesAlt
+  categories: [ HideSpawnMenu ]
+  name: hood cult
+  components:
+  - type: Sprite
+    sprite: _Wega/Clothing/Head/Hoods/Coat/cult_hoodalt.rsi
+  - type: Clothing
+    sprite: _Wega/Clothing/Head/Hoods/Coat/cult_hoodalt.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodFlagellantHood
+  categories: [ HideSpawnMenu ]
+  name: flagellant hood
+  components:
+  - type: Sprite
+    sprite: _Wega/Clothing/Head/Hoods/Coat/flagellanthood.rsi
+  - type: Clothing
+    sprite: _Wega/Clothing/Head/Hoods/Coat/flagellanthood.rsi

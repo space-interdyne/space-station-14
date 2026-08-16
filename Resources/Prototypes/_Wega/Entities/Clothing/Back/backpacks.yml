@@ -1,0 +1,8 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackBloodCult
+  name: trophy rack
+  description: A special backpack for storing trophies.
+  components:
+  - type: Sprite
+    sprite: _Wega/Clothing/Back/Backpacks/bloodcultbackpack.rsi

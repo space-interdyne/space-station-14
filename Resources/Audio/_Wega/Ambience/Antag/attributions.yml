@@ -1,0 +1,9 @@
+- files: ["bloodcult_start.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Paradise 220"
+  source: "https://github.com/ss220-space/Paradise/commit/4766a86ccb7a007943369964701ab1fe1648e3f1"
+
+- files: ["bloodcult_eyes.ogg", "bloodcult_halos.ogg", "bloodcult_scribe.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Paradise 220"
+  source: "https://github.com/ss220-space/Paradise/commit/b2232800be1ab4ef76ff4a4af86ba4a5578e6a12"

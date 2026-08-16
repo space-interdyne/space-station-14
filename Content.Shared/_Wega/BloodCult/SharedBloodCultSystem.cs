@@ -1,0 +1,61 @@
+using System.Linq;
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
+using Content.Shared.Blood.Cult.Components;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Mind;
+using Content.Shared.Popups;
+using Content.Shared.Stunnable;
+
+namespace Content.Shared.Blood.Cult;
+
+public abstract partial class SharedBloodCultSystem : EntitySystem
+{
+    [Dependency] private SharedActionsSystem _action = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+
+    #region Deconvertation
+    public void CultistDeconvertation(EntityUid cultist)
+    {
+        if (!TryComp<BloodCultistComponent>(cultist, out var bloodCultist))
+            return;
+
+        if (TryComp<ActionsContainerComponent>(cultist, out var actionsContainer))
+        {
+            foreach (var actionId in actionsContainer.Container.ContainedEntities.ToArray())
+            {
+                if (!TryComp(actionId, out MetaDataComponent? meta))
+                    continue;
+
+                var protoId = meta.EntityPrototype?.ID;
+                if (protoId == BloodCultistComponent.BloodMagic.Id
+                    || protoId == BloodCultistComponent.RecallBloodDagger.Id)
+                {
+                    _action.RemoveAction(cultist, actionId);
+                }
+            }
+        }
+
+        _action.RemoveAction(cultist, bloodCultist.RecallSpearActionEntity);
+        _action.RemoveAction(cultist, bloodCultist.SelectedSpell);
+
+        foreach (var spell in bloodCultist.SelectedEmpoweringSpells)
+            _action.RemoveAction(cultist, spell);
+
+        if (TryComp<MindLinkComponent>(cultist, out var mindLink))
+        {
+            mindLink.Channels.Remove(bloodCultist.CultMindChannel);
+            if (mindLink.Channels.Count == 0)
+                RemComp(cultist, mindLink);
+        }
+
+        _stun.TryKnockdown(cultist, TimeSpan.FromSeconds(4), true);
+        _popup.PopupEntity(Loc.GetString("blood-cult-break-control", ("name", Identity.Entity(cultist, EntityManager))), cultist);
+
+        RemComp<BloodCultistComponent>(cultist);
+        RemComp<BloodCultistEyesComponent>(cultist);
+        RemComp<BloodPentagramDisplayComponent>(cultist);
+    }
+    #endregion
+}

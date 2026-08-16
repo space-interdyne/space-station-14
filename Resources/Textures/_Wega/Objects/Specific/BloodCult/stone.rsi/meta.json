@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprite created by svarshiksatanist",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "stone"
+    },
+    {
+      "name": "shuttlecurse",
+      "delays": [ [ 0.1, 0.1, 0.1 ] ]
+    },
+    {
+      "name": "stone_soul",
+      "delays": [ [ 0.2, 0.2, 0.2, 0.2, 0.2 ] ]
+    },
+    {
+      "name": "sharpener",
+      "delays": [ [ 1, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2 ] ]
+    }
+  ]
+}

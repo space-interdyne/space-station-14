@@ -1,0 +1,68 @@
+{
+    "copyright": "Taken from https://github.com/ss220-space/Paradise & New sprites have been created by svarshiksatanist",
+    "license": "CC-BY-SA-3.0",
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "barrage"
+        },
+        {
+            "name": "blood_magic"
+        },
+        {
+            "name": "blood_rites"
+        },
+        {
+            "name": "concealpresence"
+        },
+        {
+            "name": "dagger"
+        },
+        {
+            "name": "electromagneticpulse"
+        },
+        {
+            "name": "harvester_clone"
+        },
+        {
+            "name": "hallucinations"
+        },
+        {
+            "name": "orb"
+        },
+        {
+            "name": "recall_dagger"
+        },
+        {
+            "name": "recall_spear"
+        },
+        {
+            "name": "recharge"
+        },
+        {
+            "name": "shadowshackles"
+        },
+        {
+            "name": "spear"
+        },
+        {
+            "name": "stun"
+        },
+        {
+            "name": "summonequipment"
+        },
+        {
+            "name": "teleport"
+        },
+        {
+            "name": "twistedconstruction"
+        },
+        {
+            "name": "wraith_teleport"
+        }
+    ]
+}

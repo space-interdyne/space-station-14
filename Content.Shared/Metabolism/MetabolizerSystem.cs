@@ -184,9 +184,9 @@ public sealed partial class MetabolizerSystem : EntitySystem
             if (reagents >= ent.Comp1.MaxReagentsProcessable)
                 return;
 
-            var scale = (float) mostToRemove;
+            var scale = (float)mostToRemove;
             if (!solutionData.MetabolizeAll)
-                scale /= (float) rate;
+                scale /= (float)rate;
 
             // if it's possible for them to be dead, and they are,
             // then we shouldn't process any effects, but should probably
@@ -301,6 +301,25 @@ public sealed partial class MetabolizerSystem : EntitySystem
         }
 
         return true;
+    }
+
+
+    /// <summary>
+    /// Tries to add a new metabolizer type to an entity with <see cref="MetabolizerComponent"/>
+    /// </summary>
+    /// <param name="ent">The metabolizer to add to.</param>
+    /// <param name="metabolizer">The prototype to add.</param>
+    /// <returns>True if the type was added, otherwise False.</returns>
+    public bool TryAddMetabolizerType(Entity<MetabolizerComponent?> ent, ProtoId<MetabolizerTypePrototype> metabolizer)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        // If there is no metabolizer types, we still want to add one.
+        if (ent.Comp.MetabolizerTypes == null)
+            ent.Comp.MetabolizerTypes = new HashSet<ProtoId<MetabolizerTypePrototype>>();
+
+        return ent.Comp.MetabolizerTypes.Add(metabolizer);
     }
 }
 

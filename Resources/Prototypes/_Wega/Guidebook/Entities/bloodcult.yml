@@ -1,0 +1,8 @@
+- type: entity
+  id: GuidebookDistortedEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Specific/bloodcult_structures_large.rsi
+    state: rune_large_distorted
+    color: "#800000"

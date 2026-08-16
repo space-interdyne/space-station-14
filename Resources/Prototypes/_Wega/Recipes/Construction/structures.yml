@@ -1,0 +1,64 @@
+- type: construction
+  id: CultGirder
+  graph: CultGirder
+  startNode: start
+  targetNode: cultgirder
+  category: construction-category-bloodcult
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BloodCultStructureAltar
+  graph: BloodCultStructureAltarGraph
+  startNode: start
+  targetNode: BloodCultStructureAltar
+  category: construction-category-bloodcult
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BloodCultStructureArchives
+  graph: BloodCultStructureArchivesGraph
+  startNode: start
+  targetNode: BloodCultStructureArchives
+  category: construction-category-bloodcult
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BloodCultStructureForge
+  graph: BloodCultStructureForgeGraph
+  startNode: start
+  targetNode: BloodCultStructureForge
+  category: construction-category-bloodcult
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BloodCultStructurePylon
+  graph: BloodCultStructurePylonGraph
+  startNode: start
+  targetNode: BloodCultStructurePylon
+  category: construction-category-bloodcult
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

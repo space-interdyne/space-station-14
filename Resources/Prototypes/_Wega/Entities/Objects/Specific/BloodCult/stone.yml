@@ -1,0 +1,57 @@
+- type: entity
+  id: BloodCultSoulStone
+  parent: BaseItem
+  name: soul stone
+  description: A shiny red stone with a mysterious aura.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/BloodCult/stone.rsi
+    layers:
+    - state: stone
+      map: ["soul"]
+  - type: MindContainer
+  - type: BlockMovement
+  - type: GhostRole
+    allowMovement: false
+    allowSpeech: false
+    name: ghost-role-information-soul-stone-name
+    description: ghost-role-information-soul-stone-description
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StoneSoulVisuals.HasSoul:
+        soul:
+          True: { state: stone_soul }
+          False: { state: stone }
+  - type: StoneSoul
+    soulProto: MobBanshee
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - SoulStone
+
+- type: entity
+  id: BloodCultShuttleCurse
+  parent: BaseItem
+  name: cursed sphere
+  description: It looks ominous.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/BloodCult/stone.rsi
+    state: shuttlecurse
+  - type: BloodShuttleCurse
+
+- type: entity
+  id: BloodCultEldritchSharpener
+  parent: BaseItem
+  name: eldritch sharpener
+  description: He looks extremely fragile.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/BloodCult/stone.rsi
+    state: sharpener
+  - type: BloodSharpener

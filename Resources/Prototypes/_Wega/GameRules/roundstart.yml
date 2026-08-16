@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseGameRule
+  id: BloodCult
+  components:
+  - type: GameRule
+    minPlayers: 30
+  - type: BloodCultRule
+  - type: AntagObjectives
+    objectives:
+      - BloodCultRitualObjective
+  - type: AntagSelection
+    lateJoinAdditional: true
+    antags:
+    - !type:LinearAntagCount
+      proto: BloodCultist
+      playerRatio: 10
+      range:
+        min: 2 # Minimum 2 required for work gamerule
+        max: 4

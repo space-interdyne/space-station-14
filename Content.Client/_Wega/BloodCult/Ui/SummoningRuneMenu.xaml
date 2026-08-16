@@ -1,0 +1,21 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    Title="{Loc 'runes-ui-default-title'}"
+    MinSize="512 340"
+    SetSize="512 340">
+
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4">
+        <PanelContainer VerticalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#80808005" />
+            </PanelContainer.PanelOverride>
+
+            <ScrollContainer Name="Scroll" HScrollEnabled="False" VerticalExpand="True">
+                <BoxContainer Name="CultistsContainer" Orientation="Vertical" VerticalExpand="True">
+                </BoxContainer>
+            </ScrollContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

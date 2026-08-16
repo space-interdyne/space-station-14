@@ -82,6 +82,12 @@ internal sealed partial class ChatManager : IChatManager
                 _consoleHost.ExecuteCommand($"whisper \"{CommandParsing.Escape(str)}\"");
                 break;
 
+            // Corvax-Wega-MindChat-start
+            case ChatSelectChannel.Mind:
+                _consoleHost.ExecuteCommand($"mindsay \"{CommandParsing.Escape(str)}\"");
+                break;
+            // Corvax-Wega-MindChat-end
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
         }

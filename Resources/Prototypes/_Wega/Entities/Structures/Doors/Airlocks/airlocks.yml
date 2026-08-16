@@ -1,0 +1,37 @@
+- type: entity
+  parent: Airlock
+  id: AirlockBloodCult
+  suffix: Cult
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Doors/Airlocks/Standart/bloodcult.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockBloodCultGlass
+  suffix: Cult
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Doors/Airlocks/Glass/bloodcult.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer

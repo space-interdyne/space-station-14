@@ -1,0 +1,429 @@
+- type: entity
+  id: BaseBloodRune
+  name: rune
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: _Wega/Structures/Specific/bloodcult_structures.rsi
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Appearance
+    appearanceDataInit:
+      enum.RuneColorVisuals.Color:
+        !type:String
+        "#ff0000"
+  - type: Physics
+    bodyType: Static
+    canCollide: False
+  - type: UseDelay
+    delay: 5
+
+- type: entity
+  id: BloodRuneOffering
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    state: offering
+  - type: BloodRune
+    runeType: Offering
+    desc: "offering-rune-desc"
+
+- type: entity
+  id: BloodRuneTeleport
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    state: teleport
+  - type: BloodRune
+    runeType: Teleport
+    desc: "teleport-rune-desc"
+
+- type: entity
+  id: BloodRuneEmpowering
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    state: empowering
+  - type: BloodRune
+    runeType: Empowering
+    desc: "empowering-rune-desc"
+  - type: UserInterface
+    interfaces:
+      enum.EmpoweringRuneUiKey.Key:
+        type: EmpoweringRuneBoundUserInterface
+
+- type: entity
+  id: BloodRuneRevive
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    state: revive
+  - type: BloodRune
+    runeType: Revive
+    desc: "revive-rune-desc"
+
+- type: entity
+  id: BloodRuneBarrier
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    state: barrier
+  - type: Fixtures
+    fixtures:
+      barrier:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        layer:
+        - WallLayer
+        hard: false
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: BloodRune
+    runeType: Barrier
+    desc: "barrier-rune-desc"
+
+- type: entity
+  id: BloodRuneSummoning
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    state: summoning
+  - type: BloodRune
+    runeType: Summoning
+    desc: "summoning-rune-desc"
+  - type: UserInterface
+    interfaces:
+      enum.SummoningRuneUiKey.Key:
+        type: SummoningRuneBoundUserInterface
+
+- type: entity
+  id: BloodRuneBloodBoil
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    state: bloodboil
+  - type: BloodRune
+    runeType: BloodBoil
+    desc: "bloodboil-rune-desc"
+
+- type: entity
+  id: BloodRuneSpiritealm
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    state: spiritrealm
+  - type: BloodRune
+    runeType: SpiritRealm
+    desc: "spiritrealm-rune-desc"
+
+- type: entity
+  id: BloodRuneRitualDimensionalRending
+  parent: BaseBloodRune
+  name: rune
+  description: ""
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: _Wega/Structures/Specific/bloodcult_structures_large.rsi
+    state: rune_large
+  - type: BloodRitualDimensionalRending
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: "???"
+    enabled: true
+
+- type: entity
+  parent: BaseStructure
+  id: BloodCultConstruct
+  name: construct
+  description: A strange floating structure in the air.
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Specific/bloodcult_structures.rsi
+    state: construct-cult
+  - type: Construct
+  - type: Damageable
+    damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel10:
+            min: 1
+            max: 1
+      - !type:EmptyContainersBehaviour
+        containers:
+        - item
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Anchorable
+    tool: BloodDagger
+  - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      item: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      item:
+        name: ""
+        whitelist:
+          tags:
+          - SoulStone
+  - type: UserInterface
+    interfaces:
+      enum.BloodConstructUiKey.Key:
+        type: BloodConstructBoundUserInterface
+
+- type: entity
+  id: BaseBloodCultStructure
+  parent: BaseStructure
+  abstract: true
+  components:
+  - type: Anchorable
+    tool: BloodDagger
+  - type: InteractionOutline
+  - type: BloodStructure
+    fixture: fix1
+  - type: UserInterface
+    interfaces:
+      enum.BloodStructureUiKey.Key:
+        type: BloodStructureBoundUserInterface
+
+- type: entity
+  parent: BaseBloodCultStructure
+  id: BloodCultStructureArchives
+  name: archives
+  description: A desk covered with mysterious manuscripts and volumes in unknown languages. Looking at the text, goosebumps pass.
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Specific/bloodcult_structures.rsi
+    state: archive
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+          - MachineLayer
+  - type: Appearance
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetRuneMetal1:
+            min: 0
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: BloodStructure
+    fixture: fix1
+    structureGear:
+    - ClothingEyesZealotBlindfold
+    - BloodCultVeilShifter
+    - BloodCultShuttleCurse
+    - CardTarotNotEnchanted
+  - type: Construction
+    graph: BloodCultStructureArchivesGraph
+    node: BloodCultStructureArchives
+
+- type: entity
+  id: BloodCultStructureAltar
+  parent: BaseBloodCultStructure
+  name: altar of blood
+  description: The altar of a certain goddess.
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Specific/bloodcult_structures.rsi
+    state: altar
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+          - MachineLayer
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetRuneMetal1:
+            min: 0
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: BloodStructure
+    fixture: fix1
+    structureGear:
+    - BloodCultEldritchSharpener
+    - DrinkUnholyFlaskFull
+    - BloodCultConstruct
+  - type: PointLight
+    radius: 1.1
+    energy: 1
+    color: "#f08080"
+  - type: Construction
+    graph: BloodCultStructureAltarGraph
+    node: BloodCultStructureAltar
+
+- type: entity
+  parent: BaseBloodCultStructure
+  id: BloodCultStructureForge
+  name: forge of souls
+  description: An occult forge. Not only evil is being done here, but also a lot of evil.
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Specific/bloodcult_structures.rsi
+    state: forge
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+          - MachineLayer
+  - type: Appearance
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetRuneMetal1:
+            min: 0
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: BloodStructure
+    fixture: fix1
+    sound: "/Audio/_Wega/Effects/anvil.ogg"
+    structureGear:
+    - ClothingOuterArmorBloodCult
+    - ClothingOuterFlagellantRobe
+    - MirrorShield
+    - ClothingShoesBootsForsaken
+  - type: Construction
+    graph: BloodCultStructureForgeGraph
+    node: BloodCultStructureForge
+
+- type: entity
+  id: BloodCultStructurePylon
+  parent: BaseBloodCultStructure
+  name: pylon
+  description: A mysterious face is looking at you.
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Specific/bloodcult_structures.rsi
+    state: pylon
+  - type: BloodPylon
+  - type: BloodStructure
+    fixture: fix1
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetRuneMetal1:
+            min: 0
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: BloodCultStructurePylonGraph
+    node: BloodCultStructurePylon

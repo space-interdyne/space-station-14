@@ -1,0 +1,8 @@
+- type: entity
+  parent: ClothingOuterArmorCult
+  id: ClothingOuterArmorBloodCult
+  name: acolyte armor
+  description: An evil-looking piece of cult armor, made of bones.
+  components:
+  - type: CultEquipment
+    cult: Blood

@@ -1,0 +1,155 @@
+- type: entity
+  id: BloodCultFloorGlowEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Wega/Effects/floorglow.rsi
+    state: floorglow
+  - type: TimedDespawn
+    lifetime: 0.5
+
+- type: entity
+  id: BloodCultOrb
+  parent: BaseItem
+  name: blood orb
+  description: ""
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Wega/Effects/bloodorb.rsi
+    state: blood_orb
+  - type: BloodOrb
+
+- type: entity
+  id: BloodCultShieldEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: OverMobs
+    sprite: _Wega/Effects/shield-bloodcult.rsi
+    state: shield
+
+- type: entity
+  id: BloodCultOutEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Wega/Effects/bloodcultteleport.rsi
+    state: cultout
+  - type: TimedDespawn
+    lifetime: 1.2
+
+- type: entity
+  id: BloodCultInEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Wega/Effects/bloodcultteleport.rsi
+    state: cultin
+  - type: TimedDespawn
+    lifetime: 1.2
+
+- type: entity
+  id: BaseBloodCultRuneEffect
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: _Wega/Structures/Specific/bloodcult_structures.rsi
+  - type: Appearance
+    appearanceDataInit:
+      enum.RuneColorVisuals.Color:
+        !type:String
+        "#ff0000"
+  - type: BloodRune
+    runeType: Default
+  - type: TimedDespawn
+    lifetime: 4.0
+
+- type: entity
+  id: BloodRuneOfferingEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: offering_anim
+
+- type: entity
+  id: BloodRuneTeleportEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: teleport_anim
+
+- type: entity
+  id: BloodRuneEmpoweringEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: empowering_anim
+
+- type: entity
+  id: BloodRuneReviveEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: revive_anim
+
+- type: entity
+  id: BloodRuneBarrierEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: barrier_anim
+
+- type: entity
+  id: BloodRuneSummoningEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: summoning_anim
+
+- type: entity
+  id: BloodRuneBloodBoilEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: bloodboil_anim
+
+- type: entity
+  id: BloodRuneSpiritealmEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: spiritrealm_anim
+
+- type: entity
+  id: BloodRuneRitualDimensionalRendingEffect
+  parent: BaseBloodCultRuneEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: _Wega/Structures/Specific/bloodcult_structures_large.rsi
+    state: rune_large_anim
+  - type: TimedDespawn
+    lifetime: 9.75
+
+- type: entity
+  id: BloodCultDistortedEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Wega/Structures/Specific/bloodcult_structures_large.rsi
+    state: rune_large_distorted
+    color: "#800000"
+  - type: TimedDespawn
+    lifetime: 1.0

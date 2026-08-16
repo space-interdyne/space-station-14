@@ -1,0 +1,13 @@
+- type: entity
+  id: RandomContainerBlank
+  name: random container spawner
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RandomSpawner
+    prototypes:
+    - CrateGenericSteel
+    - CratePlastic
+    - CrateMedical
+    - CrateEngineering
+    - CrateScience
+    - CrateSecgear

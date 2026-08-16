@@ -23,7 +23,7 @@
     components:
     - AntagImmune
     - BibleUser
-    - Android
+    tags:
     - Ipc
   components:
   - type: BloodCultist

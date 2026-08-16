@@ -1,0 +1,18 @@
+- type: entity
+  id: RandomAgressiveAnimal
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RandomSpawner
+    prototypes:
+    - MobTickSalvage
+    - MobCarp
+    - MobCarpHolo
+    - MobCarpMagic
+    - MobShark
+    - MobSmallPurpleSnake
+    - MobPurpleSnake
+    - MobGiantSpider
+    - MobClownSpider
+    - MobSpiderSpace
+    - MobBearSpace
+    - MobKangarooSpace

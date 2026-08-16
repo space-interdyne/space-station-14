@@ -1,0 +1,107 @@
+- type: constructionGraph
+  id: BloodCultStructureAltarGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: BloodCultStructureAltar
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: RuneMetal
+              amount: 3
+              doAfter: 1
+    - node: BloodCultStructureAltar
+      entity: BloodCultStructureAltar
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRuneMetal1
+              amount: 3
+          steps:
+            - tool: Screwing
+              doAfter: 4
+
+- type: constructionGraph
+  id: BloodCultStructureArchivesGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: BloodCultStructureArchives
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: RuneMetal
+              amount: 3
+              doAfter: 1
+    - node: BloodCultStructureArchives
+      entity: BloodCultStructureArchives
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRuneMetal1
+              amount: 3
+          steps:
+            - tool: Screwing
+              doAfter: 8
+
+- type: constructionGraph
+  id: BloodCultStructureForgeGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: BloodCultStructureForge
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: RuneMetal
+              amount: 3
+              doAfter: 1
+    - node: BloodCultStructureForge
+      entity: BloodCultStructureForge
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRuneMetal1
+              amount: 3
+          steps:
+            - tool: Screwing
+              doAfter: 8
+
+- type: constructionGraph
+  id: BloodCultStructurePylonGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: BloodCultStructurePylon
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: RuneMetal
+              amount: 4
+              doAfter: 1
+    - node: BloodCultStructurePylon
+      entity: BloodCultStructurePylon
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRuneMetal1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 8

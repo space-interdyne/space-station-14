@@ -1,0 +1,1 @@
+ent-BloodCultOrb = кровавая сфера

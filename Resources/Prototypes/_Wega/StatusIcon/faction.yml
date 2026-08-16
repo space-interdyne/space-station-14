@@ -1,0 +1,12 @@
+- type: factionIcon
+  id: BloodCultistFaction
+  isShaded: true
+  priority: 11
+  showTo:
+    components:
+      - BloodCultist
+      - ShowCultistIcons
+  locationPreference: Right
+  icon:
+    sprite: /Textures/_Wega/Interface/Misc/bloodcult_icons.rsi
+    state: Cultist

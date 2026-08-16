@@ -8,8 +8,10 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Database; // Corvax-Wega-Add
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
+using Content.Shared.Mind; // Corvax-Wega-MindChat
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Speech.EntitySystems;
@@ -20,6 +22,8 @@ using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
+using Robust.Shared.Utility; // Corvax-Wega-Add
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Chat.Systems;
 
@@ -45,6 +49,12 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private ReplacementAccentSystem _wordreplacement = default!;
     [Dependency] private ExamineSystemShared _examineSystem = default!;
     [Dependency] private EntityQuery<GhostHearingComponent> _ghostHearingQuery = default!;
+
+    // Corvax-TTS-Start: Moved from Server to Shared
+    // public const int VoiceRange = 10; // how far voice goes in world units
+    // public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
+    // public const int WhisperMuffledRange = 5; // how far whisper goes at all, in world units
+    // Corvax-TTS-End
 
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
@@ -149,7 +159,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         bool ignoreActionBlocker = false
         )
     {
-        if (HasComp<GhostComponent>(source))
+        if (HasComp<GhostComponent>(source) && !HasComp<HumanoidProfileComponent>(source)) // Corvax-Wega-Ghostbar
         {
             // Ghosts can only send dead chat messages, so we'll forward it to InGame OOC.
             TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
@@ -216,6 +226,14 @@ public sealed partial class ChatSystem : SharedChatSystem
                 SendEntityWhisper(source, modMessage, range, channel, nameOverride, hideLog, ignoreActionBlocker);
                 return;
             }
+
+            // Corvax-Wega-MindChat-start
+            if (TryProcessMindMessage(source, message, out var mindMessage, out var mindChannel) && mindChannel != null)
+            {
+                SendMindMessage(source, mindMessage, mindChannel, ignoreActionBlocker);
+                return;
+            }
+            // Corvax-Wega-MindChat-end
         }
 
         // Otherwise, send whatever type.
@@ -286,6 +304,69 @@ public sealed partial class ChatSystem : SharedChatSystem
                 break;
         }
     }
+
+    // Corvax-Wega-MindChat-start
+    /// <inheritdoc/>
+    public override void SendMindMessage(
+        EntityUid source,
+        string message,
+        MindChannelPrototype channel,
+        bool ignoreActionBlocker = false)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        if (!ignoreActionBlocker && !_actionBlocker.CanSpeak(source))
+            return;
+
+        var name = MetaData(source).EntityName;
+        name = FormattedMessage.EscapeText(name);
+
+        var wrappedMessage = Loc.GetString("chat-mind-message-wrap",
+            ("color", channel.Color),
+            ("channel", $"\\[{channel.LocalizedName}\\]"),
+            ("name", name),
+            ("message", message));
+
+        // Send to all entities with the same mind channel
+        foreach (var (session, _) in GetRecipients(source, MindChatRange))
+        {
+            if ((!TryComp<MindLinkComponent>(session.AttachedEntity, out var mindLink) || !mindLink.Channels.Contains(channel.ID))
+                && !HasComp<AdminMindLinkListenerComponent>(session.AttachedEntity))
+                continue;
+
+            _chatManager.ChatMessageToOne(
+                ChatChannel.Mind,
+                message,
+                wrappedMessage,
+                source,
+                false,
+                session.Channel);
+        }
+
+        // Also send a whisper
+        TrySendInGameICMessage(
+            source,
+            message,
+            InGameICChatType.Whisper,
+            ChatTransmitRange.Normal,
+            nameOverride: name,
+            ignoreActionBlocker: true);
+
+        // Log to admin logs
+        _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            $"Mind message from {ToPrettyString(source):user} on {channel.LocalizedName}: {message}");
+
+        // Record for replay
+        var chat = new ChatMessage(
+            ChatChannel.Mind,
+            message,
+            wrappedMessage,
+            GetNetEntity(source),
+            null);
+        _replay.RecordServerMessage(chat);
+    }
+    // Corvax-Wega-MindChat-end
 }
 
 /// <summary>

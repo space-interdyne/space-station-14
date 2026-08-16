@@ -1,0 +1,9 @@
+- type: npcFaction
+  id: BloodCult
+  hostile:
+  - NanoTrasen
+  - Zombie
+  - Vampire
+  - SimpleHostile
+  - Xeno
+  - Dragon

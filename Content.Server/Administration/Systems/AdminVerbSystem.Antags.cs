@@ -34,6 +34,8 @@ public sealed partial class AdminVerbSystem
     private static readonly EntProtoId DefaultNinjaRule = "NinjaSpawn";
     private static readonly ProtoId<StartingGearPrototype> PirateGearId = "PirateGear";
 
+    private static readonly EntProtoId DefaultBloodCultRule = "BloodCult"; // Corvax-Wega-BloodCult
+
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
     {
@@ -225,5 +227,21 @@ public sealed partial class AdminVerbSystem
 
         if (HasComp<HumanoidProfileComponent>(args.Target)) // only humanoids can be cloned
             args.Verbs.Add(paradox);
+
+         // Corvax-Wega-Blood-Cult-start
+        Verb bloodcultist = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-blood-culsist"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("_Wega/Objects/Weapons/Melee/blood_dagger.rsi"), "icon"),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<BloodCultRuleComponent>(targetPlayer, DefaultBloodCultRule);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-blood-culsist"),
+        };
+        args.Verbs.Add(bloodcultist);
+        // Corvax-Wega-Blood-Cult-end
     }
 }

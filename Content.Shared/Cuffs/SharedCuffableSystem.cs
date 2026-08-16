@@ -787,6 +787,13 @@ namespace Content.Shared.Cuffs
             cuff.Removing = false;
         }
 
+        // Corvax-Wega-Blood-Cult-SHIT-start
+        public void CuffUsed(HandcuffComponent cuff)
+        {
+            cuff.Used = true;
+        }
+        // Corvax-Wega-Blood-Cult-SHIT-end
+
         #region ActionBlocker
 
         private void CheckAct(EntityUid uid, CuffableComponent component, CancellableEntityEventArgs args)

@@ -1,0 +1,35 @@
+- type: entity
+  parent: SheetOtherBase
+  id: SheetRuneMetal
+  name: runemetal
+  suffix: Full, DO NOT MAP
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      RuneMetal: 100
+  - type: Stack
+    stackType: RuneMetal
+    baseLayer: base
+    layerStates:
+    - runemetal
+    - runemetal_2
+    - runemetal_3
+  - type: Sprite
+    sprite: _Wega/Objects/Materials/Sheets/metal.rsi
+    state: runemetal_3
+    layers:
+    - state: runemetal_3
+      map: ["base"]
+  - type: Appearance
+  - type: Item
+    heldPrefix: runemetal
+
+- type: entity
+  parent: SheetRuneMetal
+  id: SheetRuneMetal1
+  name: runemetal
+  suffix: Single, DO NOT MAP
+  components:
+  - type: Stack
+    count: 1

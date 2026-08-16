@@ -1,0 +1,6 @@
+- type: tool
+  id: BloodDagger
+  name: tool-quality-dagger-name
+  toolName: tool-quality-dagger-tool-name
+  spawn: WeaponBloodDagger
+  icon: { sprite: _Wega/Objects/Weapons/Melee/blood_dagger.rsi, state: icon }

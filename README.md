@@ -97,8 +97,34 @@
 
 |                         |                                                                                                                                                                                                                                               |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Код**                 | [AGPLv3](LICENSE-AGPLv3.txt)                                                                                                                                                                                                                  |
+| **Код Space Dream**     | [AGPLv3](LICENSE-AGPLv3.txt)                                                                                                                                                                                                                  |
 | **Большинство ассетов** | [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) - лицензия и авторы указаны в метаданных RSI, [пример](https://github.com/space-syndicate/space-station-14/blob/master/Resources/Textures/Objects/Tools/crowbar.rsi/meta.json). |
 
 
 Часть ассетов распространяется на **некоммерческой** основе ([CC-BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) и аналоги) - перед коммерческим использованием такие файлы нужно удалить или заменить.
+
+<details>
+<summary><strong>📜 Лицензии upstream-проектов</strong></summary>
+
+<br/>
+
+Репозиторий собран из нескольких форков. **Код Space Dream** распространяется под **AGPLv3**, если явно не указано иное в заголовке файла или соседнем `LICENSE-*`.
+
+| Проект | Репозиторий | Лицензия кода |
+| --- | --- | --- |
+| **Space Dream** (этот репозиторий) | [space-interdyne/space-station-14](https://github.com/space-interdyne/space-station-14) | [AGPLv3](LICENSE-AGPLv3.txt) |
+| **WizDen** (Space Wizards) | [space-wizards/space-station-14](https://github.com/space-wizards/space-station-14) | [MIT](https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT) |
+| **Corvax** | [space-syndicate/space-station-14](https://github.com/space-syndicate/space-station-14) | [MIT](LICENSE-MIT.TXT) |
+| **Wega** | [wega-team/ss14-wega](https://github.com/wega-team/ss14-wega) | [GPLv3](https://github.com/wega-team/ss14-wega/blob/master/LICENSE.TXT) |
+| **Floofstation** | [Floof-Station/Floof-Station](https://github.com/Floof-Station/Floof-Station) | [AGPLv3](https://github.com/Floof-Station/Floof-Station/blob/master/LICENSE-AGPLv3.txt) |
+| **Goob Station** | [Goob-Station/Goob-Station](https://github.com/Goob-Station/Goob-Station) | [AGPLv3](https://github.com/Goob-Station/Goob-Station/blob/master/LICENSE-AGPLv3.txt) |
+| **Delta-V** | [DeltaV-Station/Delta-v](https://github.com/DeltaV-Station/Delta-v) | AGPLv3 |
+| **Frontier Station** | [new-frontiers-14/frontier-station-14](https://github.com/new-frontiers-14/frontier-station-14) | AGPLv3 |
+
+**Сводка:** WizDen и Corvax — **MIT**; Wega — **GPLv3**; Space Dream и прочие перечисленные форки — **AGPLv3** (если в конкретном файле не указано иное).
+
+> **Robust Toolbox** (движок) — отдельный субмодуль WizDen: код под [MIT](https://github.com/space-wizards/RobustToolbox/blob/master/LICENSE-MIT.TXT), ассеты — [CC-BY-SA 3.0](https://github.com/space-wizards/RobustToolbox/blob/master/LICENSE-ASSETS.TXT).
+
+При переносе кода или ассетов из других форков сверяйтесь с их лицензией и сохраняйте атрибуцию (SPDX-заголовки, `meta.json`, `.license`-файлы).
+
+</details>

@@ -87,12 +87,55 @@
     bodyStatus: InAir
   - type: CanMoveInAir
   # singulose components
-  - type: EventHorizon
-    radius: 5
-    canBreachContainment: true
-  - type: GravityWell
-    baseRadialAcceleration: 6
-    maxRange: 8
+  # Corvax-Wega-Blood-Cult-start
+  # - type: EventHorizon
+  #   radius: 5
+  #   canBreachContainment: true
+  # - type: GravityWell
+  #   baseRadialAcceleration: 6
+  #   maxRange: 8
+  # Corvax-Wega-Blood-Cult-end
   - type: WarpPoint
     follow: true
     location: location-nar-sie
+  # Corvax-Wega-Blood-Cult-start
+  - type: TimedSpawner
+    prototypes:
+    - MobConstructHarvester
+    intervalSeconds: 8
+  - type: Godmode
+  - type: Eye
+    drawFov: false
+  - type: Puller
+    needsHands: false
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 10
+    baseSprintSpeed: 4
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-narsie
+    description: ghost-role-information-narsie-desc
+    rules: ""
+    raffle:
+      settings: short
+  - type: CombatMode
+  - type: MeleeWeapon
+    resistanceBypass: True
+    altDisarm: false
+    hidden: true
+    angle: 180
+    range: 8
+    animation: WeaponArcClaw
+    soundHit:
+      path: /Audio/Weapons/block_metal1.ogg
+    attackRate: 2
+    damage:
+      types:
+        Blunt: 250
+        Slash: 250
+        Piercing: 50
+        Structural: 2500
+  # Corvax-Wega-Blood-Cult-end

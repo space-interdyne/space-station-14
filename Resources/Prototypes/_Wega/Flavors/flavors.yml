@@ -1,0 +1,4 @@
+- type: flavor
+  id: unholy
+  flavorType: Complex
+  description: flavor-complex-unholy

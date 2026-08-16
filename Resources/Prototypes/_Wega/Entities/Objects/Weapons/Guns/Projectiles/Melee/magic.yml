@@ -1,0 +1,454 @@
+- type: entity
+  parent: BaseKnife
+  id: WeaponBloodDagger
+  name: ritual dagger
+  description: An old, worn dagger.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/blood_dagger.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - belt
+  - type: BloodDagger
+  - type: CultWeapon
+    cult: Blood
+  - type: Tool
+    qualities:
+      - Slicing
+      - BloodDagger
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.25
+    damage:
+      types:
+        Slash: 12
+  - type: DamageOtherOnHit
+    ignoreResistances: true
+    damage:
+      types:
+        Slash: 10
+        Piercing: 15
+  - type: ThrowingAngle
+    angle: 225
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.475,-0.225
+          - -0.225,-0.475
+          - 0.525,0.275
+          - 0.275,0.525
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: UserInterface
+    interfaces:
+      enum.BloodRunesUiKey.Key:
+        type: RunesMenuBoundUserInterface
+
+- type: entity
+  parent: WeaponBloodDagger
+  id: WeaponDeathDagger
+  name: ritual dagger
+  description: An old, worn dagger.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/death_dagger.rsi
+    state: icon
+
+- type: entity
+  parent: WeaponBloodDagger
+  id: WeaponHellDagger
+  name: ritual dagger
+  description: An old, worn dagger.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/hell_dagger.rsi
+    state: icon
+
+- type: entity
+  id: WeaponBloodBlade
+  parent: BaseItem
+  name: blood blade
+  description: The red formation of liquid blood in the shape of a sword is a very mysterious sight.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/blood_blade.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+  - type: Item
+    storedRotation: -45
+    size: Normal
+    shape:
+    - 0,0,0,2
+  - type: CultWeapon
+    cult: Blood
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Slash: 30
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: DisarmMalus
+  - type: Construction
+    deconstructionTarget: null
+    graph: BloodCultWeapons
+    node: blood
+  - type: Tool
+    qualities:
+    - Slicing
+  - type: BonusMeleeDamage
+    heavyDamageMultiplier: 1.3
+
+- type: entity
+  id: WeaponDeathBlade
+  parent: BaseItem
+  name: death blade
+  description: A scythe-like weapon, very sharp...
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/death_blade.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+  - type: Item
+    storedRotation: -45
+    size: Normal
+    shape:
+    - 0,0,1,2
+    - 0,0,2,1
+  - type: CultWeapon
+    cult: Blood
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Piercing: 30
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: DisarmMalus
+  - type: Construction
+    deconstructionTarget: null
+    graph: BloodCultWeapons
+    node: death
+  - type: Tool
+    qualities:
+    - Slicing
+  - type: BonusMeleeDamage
+    heavyDamageMultiplier: 1.3
+
+- type: entity
+  id: WeaponHellBlade
+  parent: BaseItem
+  name: hell blade
+  description: A blazing axe of agony, straight from the underworld.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/hell_blade.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+  - type: Item
+    storedRotation: -45
+    size: Normal
+    shape:
+    - 0,0,2,1
+    - 1,0,2,1
+  - type: CultWeapon
+    cult: Blood
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Heat: 25
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: DisarmMalus
+  - type: Construction
+    deconstructionTarget: null
+    graph: BloodCultWeapons
+    node: hell
+  - type: Tool
+    qualities:
+    - Slicing
+  - type: BonusMeleeDamage
+    heavyDamageMultiplier: 1.5
+
+- type: entity
+  parent: BaseItem
+  id: BloodCultSpear
+  name: blood spear
+  description: The spear formed from blood clots looks quite fragile.
+  components:
+  - type: ThrowingAngle
+    angle: 225
+  - type: LandAtCursor
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/blood_spear.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+  - type: Item
+    size: Normal
+  - type: Wieldable
+  - type: Damageable
+    damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PuddleBlood:
+            min: 1
+            max: 1
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: CultWeapon
+    cult: Blood
+  - type: MeleeWeapon
+    range: 2.5
+    possibilityWideAtack: false
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 25
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    ignoreResistances: true
+    damage:
+      types:
+        Piercing: 41
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Piercing: 4
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 5
+  - type: Tool
+    qualities:
+    - Slicing
+  - type: BonusMeleeDamage
+    heavyDamageMultiplier: 1.5
+
+- type: entity
+  parent: BaseItem
+  id: BaseBloodCultSpell
+  name: blood magic
+  description: Magic from the other world.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/magic_hand.rsi
+    state: icon
+  - type: DeleteOnDrop
+  - type: Item
+    size: Ginormous
+
+- type: entity
+  parent: BaseBloodCultSpell
+  id: BloodCultSpellStun
+  components:
+  - type: Sprite
+    color: "#e20205"
+  - type: BloodSpell
+    spellType: Stun
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#e20205"
+      right:
+      - state: inhand-right
+        color: "#e20205"
+
+- type: entity
+  parent: BaseBloodCultSpell
+  id: BloodCultSpellTeleport
+  components:
+  - type: Sprite
+    color: "#4e1459"
+  - type: BloodSpell
+    spellType: Teleport
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#4e1459"
+      right:
+      - state: inhand-right
+        color: "#4e1459"
+
+- type: entity
+  parent: BaseBloodCultSpell
+  id: BloodCultSpellShadowShackles
+  components:
+  - type: Sprite
+    color: "#000002"
+  - type: BloodSpell
+    spellType: ShadowShackles
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#000002"
+      right:
+      - state: inhand-right
+        color: "#000002"
+
+- type: entity
+  parent: BaseBloodCultSpell
+  id: BloodCultSpellTwistedConstruction
+  components:
+  - type: Sprite
+    color: "#000002"
+  - type: BloodSpell
+    spellType: TwistedConstruction
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#000002"
+      right:
+      - state: inhand-right
+        color: "#000002"
+
+- type: entity
+  parent: BaseBloodCultSpell
+  id: BloodCultSpellSummonEquipment
+  components:
+  - type: Sprite
+    color: "#448d33"
+  - type: BloodSpell
+    spellType: SummonEquipment
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#448d33"
+      right:
+      - state: inhand-right
+        color: "#448d33"
+
+- type: entity
+  parent: BaseBloodCultSpell
+  id: BloodCultSpellBloodRites
+  components:
+  - type: Sprite
+    color: "#6f0f13"
+  - type: BloodSpell
+    spellType: BloodRites
+  - type: UseDelay
+    delay: 5
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#6f0f13"
+      right:
+      - state: inhand-right
+        color: "#6f0f13"
+  - type: UserInterface
+    interfaces:
+      enum.BloodRitesUiKey.Key:
+        type: BloodRitesBoundUserInterface
+
+- type: entity
+  parent: BaseItem
+  id: BloodCultVeilShifter
+  name: veil shifter
+  description: A small staff emitting a strange glow.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Melee/blood_shifter.rsi
+    layers:
+    - state: activated
+      map: ["active"]
+  - type: VeilShifter
+  - type: UseDelay
+    delay: 4
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.VeilShifterVisuals.Charged:
+        active:
+          True: { state: activated }
+          False: { state: base }
+
+- type: entity
+  parent: BaseBloodCultSpell
+  id: BloodCultSpellBloodBarrage
+  components:
+  - type: Sprite
+    state: pulse
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ff0000"
+      right:
+      - state: inhand-right
+        color: "#ff0000"
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container {}
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+  - type: AmmoCounter
+  - type: BallisticAmmoProvider
+    proto: ProjectileBloodBolt
+    capacity: 24
+  - type: CultAllowedGun # Corvax-Wega-Cult

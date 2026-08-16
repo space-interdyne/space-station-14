@@ -1,0 +1,7 @@
+- type: material
+  id: RuneMetal
+  stackEntity: SheetRuneMetal1
+  name: materials-runemetal
+  icon: { sprite: _Wega/Objects/Materials/Sheets/metal.rsi, state: runemetal }
+  color: "#3f4857"
+  price: 0.05

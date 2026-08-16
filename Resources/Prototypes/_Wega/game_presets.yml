@@ -1,0 +1,14 @@
+- type: gamePreset
+  id: BloodCult
+  alias:
+    - blood-cult
+  name: blood-cult-title
+  description: blood-cult-description
+  showInVote: false
+  rules:
+    - BloodCult
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation

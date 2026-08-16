@@ -1,0 +1,47 @@
+- type: entity
+  name: bola
+  parent: Bola
+  id: CultBola
+  description: There are some runes depicted on it.
+  components:
+  - type: EmitSoundOnThrow
+    sound: /Audio/_Wega/Effects/Vampire/glare.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/Effects/snap.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/_Wega/Effects/cult_spell.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Sprite
+    sprite: _Wega/Objects/Weapons/Throwable/cult_bola.rsi
+    state: icon
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,0,1
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 15
+  - type: Ensnaring
+    freeTime: 1.5
+    breakoutTime: 6.5 #all bola should generally be fast to remove
+    walkSpeed: 0.3 #makeshift bola shouldn't slow too much
+    sprintSpeed: 0.3
+    staminaDamage: 30 # anything but this is gamebreaking
+    canThrowTrigger: true
+    canMoveBreakout: true
+    maxEnsnares: 1

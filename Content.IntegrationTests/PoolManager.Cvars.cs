@@ -37,7 +37,6 @@ public static partial class PoolManager
         (CCVars.MovementMobPushing.Name, "false"),
         (CCVars.ResourceUploadingStoreDeletionDays.Name, "0"),
         // SD edit
-        (SDCCVars.MovementDirectionalPenaltyEnabled.Name, "false"),
         (SDCCVars.NsfwContentEnabled.Name, "false"),
     };
 }

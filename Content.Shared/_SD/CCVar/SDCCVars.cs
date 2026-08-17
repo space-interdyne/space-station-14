@@ -20,22 +20,4 @@ public sealed class SDCCVars
     public static readonly CVarDef<bool> NsfwContentEnabled =
         CVarDef.Create("sd.nsfw_content_enabled", true, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
 
-    /// <summary>
-    /// When enabled, wish movement speed is scaled by alignment with body facing.
-    /// </summary>
-    public static readonly CVarDef<bool> MovementDirectionalPenaltyEnabled =
-        CVarDef.Create("sd.movement.directional_penalty_enabled", true, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
-
-    /// <summary>
-    /// Speed multiplier when moving perpendicular to facing (strafe).
-    /// </summary>
-    public static readonly CVarDef<float> MovementStrafeSpeedModifier =
-        CVarDef.Create("sd.movement.strafe_speed_modifier", 0.7f, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
-
-    /// <summary>
-    /// Speed multiplier when moving opposite to facing (backpedal).
-    /// </summary>
-    public static readonly CVarDef<float> MovementBackSpeedModifier =
-        CVarDef.Create("sd.movement.back_speed_modifier", 0.5f, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
-
 }

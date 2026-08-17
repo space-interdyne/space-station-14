@@ -14,7 +14,7 @@ using Content.Shared.Blood.Cult;
 using Content.Shared.Blood.Cult.Components;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
-using Content.Shared.Clumsy;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
@@ -57,6 +57,7 @@ namespace Content.Server.GameTicking.Rules
         [Dependency] private ObjectivesSystem _objectives = default!;
         [Dependency] private TargetObjectiveSystem _target = default!;
         [Dependency] private MetaDataSystem _meta = default!;
+        [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
         public readonly ProtoId<NpcFactionPrototype> BloodCultNpcFaction = "BloodCult";
 
@@ -230,11 +231,14 @@ namespace Content.Server.GameTicking.Rules
             var componentsToRemove = new[]
             {
                 typeof(PacifiedComponent),
-                typeof(ClumsyComponent)
             };
 
             foreach (var compType in componentsToRemove)
                 RemComp(ent, compType);
+
+            _statusEffects.TryRemoveStatusEffect(ent, "StatusEffectClumsyClown");
+            _statusEffects.TryRemoveStatusEffect(ent, "StatusEffectClumsyMonkey");
+            _statusEffects.TryRemoveStatusEffect(ent, "StatusEffectClumsyKobold");
 
             HandleMetabolism(ent);
             CreateObjectivesForCultist(ent);

@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Blood.Cult.UI;
-using Content.Server.Body.Systems;
+using Content.Shared.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Shared.Emp;
 using Content.Server.EUI;

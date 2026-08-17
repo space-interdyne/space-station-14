@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Numerics;
-using Content.Server.Body.Systems;
+using Content.Shared.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.Dice;
@@ -51,7 +51,9 @@ using Content.Shared.Tiles;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Trigger.Systems;
-using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
+using Content.Shared.Station.Components;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.GameObjects;

@@ -22,7 +22,7 @@ namespace Content.Server.Nyanotrasen.Abilities.Felinid;
 public sealed partial class FelinidSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private HungerSystem _hungerSystem = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private VomitSystem _vomitSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionSystem = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
@@ -116,10 +116,10 @@ public sealed partial class FelinidSystem : EntitySystem
         if (component.EatActionTarget == null)
             return;
 
-        if (!TryComp<HungerComponent>(uid, out var hunger))
+        if (!TryComp<SatiationComponent>(uid, out var satiation))
             return;
 
-        if (hunger.CurrentThreshold == HungerThreshold.Overfed)
+        if (_satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, above: "Overfed"))
         {
             _popupSystem.PopupEntity(Loc.GetString("ingestion-you-cannot-ingest-any-more", ("verb", "eat")), uid, uid, PopupType.SmallCaution);
             return;
@@ -143,7 +143,7 @@ public sealed partial class FelinidSystem : EntitySystem
         component.EatActionTarget = null;
 
         _audio.PlayPvs("/Audio/Items/eating_1.ogg", uid, AudioHelpers.WithVariation(0.15f));
-        _hungerSystem.ModifyHunger(uid, 50f, hunger);
+        _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, 50f);
 
         if (component.EatAction != null)
             _actionsSystem.RemoveAction(uid, component.EatAction.Value);

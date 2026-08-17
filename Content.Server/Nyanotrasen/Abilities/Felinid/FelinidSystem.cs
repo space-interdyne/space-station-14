@@ -11,6 +11,7 @@ using Content.Shared.Item;
 using Content.Shared.Medical;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
@@ -30,6 +31,8 @@ public sealed partial class FelinidSystem : EntitySystem
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChargesSystem _sharedChargesSystem = default!;
+
+    private static readonly SatiationValue HungerOverfedThreshold = "Overfed";
 
     private readonly Queue<EntityUid> _remQueue = new();
 
@@ -119,7 +122,7 @@ public sealed partial class FelinidSystem : EntitySystem
         if (!TryComp<SatiationComponent>(uid, out var satiation))
             return;
 
-        if (_satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, above: "Overfed"))
+        if (_satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, above: HungerOverfedThreshold))
         {
             _popupSystem.PopupEntity(Loc.GetString("ingestion-you-cannot-ingest-any-more", ("verb", "eat")), uid, uid, PopupType.SmallCaution);
             return;

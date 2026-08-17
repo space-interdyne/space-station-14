@@ -152,14 +152,12 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
         reason = null;
 
         var colorValues = Color.ToHsv(color);
-
-        var hue = Math.Round(colorValues.X * 360f);
-        var sat = Math.Round(colorValues.Y * 100f);
-        var val = Math.Round(colorValues.Z * 100f);
+    // SD edit start
         // rangeOffset makes it so that this value
         // is 25 <= hue <= 45
-        if (hue < 25f || hue > 45f)
+        if (!SkinColorationUtils.IsHueInRange(colorValues.X, 25f / 360f, 45f / 360f))
         {
+            var hue = Math.Round(colorValues.X * 360f);
             reason = $"Hue {hue} is outside of expected ranges 25 and 45.";
             return false;
         }
@@ -167,7 +165,9 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
         // rangeOffset makes it so that these two values
         // are 20 <= sat <= 100 and 20 <= val <= 100
         // where saturation increases to 100 and value decreases to 20
-        if (sat < 20f || val < 20f)
+        if (colorValues.Y < 20f / 100f - SkinColorationUtils.Epsilon
+            || colorValues.Z < 20f / 100f - SkinColorationUtils.Epsilon)
+        // SD edit end
         {
             reason = "Saturation or value are below expected number of 20.";
             return false;

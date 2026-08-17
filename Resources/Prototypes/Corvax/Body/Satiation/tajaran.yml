@@ -1,0 +1,9 @@
+- type: satiation
+  id: TajaranHunger
+  parent: NormalSatiationHunger
+  baseChangeRate: -0.02
+
+- type: satiation
+  id: TajaranThirst
+  parent: NormalSatiationThirst
+  baseChangeRate: -0.15

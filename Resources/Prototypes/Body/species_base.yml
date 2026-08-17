@@ -72,7 +72,6 @@
   - type: StatusEffects
     allowed:
     - Electrocution
-    - PressureImmunity
     - Pacified
     - Flashed
     - Adrenaline
@@ -164,11 +163,16 @@
   - MobFlammable
   - BaseSpeciesMob
   - BaseMobDestructible
+  - BaseHungerThirstSlowdown
   id: BaseSpeciesMobOrganic
   save: false
   components:
-  - type: Hunger
-  - type: Thirst
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: NormalSatiationHunger
+      Thirst:
+        prototype: NormalSatiationThirst
   - type: Arousal # SD
   - type: Barotrauma
     damage:
@@ -176,6 +180,7 @@
         Blunt: 0.50
         Heat: 0.1
   - type: PassiveDamage
+    intervalHaltOnDamageTaken: 5s
     allowedStates:
     - Alive
     damage:

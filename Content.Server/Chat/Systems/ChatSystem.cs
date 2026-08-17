@@ -11,6 +11,7 @@ using Content.Shared.Chat;
 using Content.Shared.Database; // Corvax-Wega-Add
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Mind; // Corvax-Wega-MindChat
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players.RateLimiting;

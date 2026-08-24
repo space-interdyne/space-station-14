@@ -15,7 +15,7 @@
   &nbsp;
   <a href="https://github.com/TheSpaceFrontier/TSF" title="Этот репозиторий"><img height="44" src="https://skillicons.dev/icons?i=github&theme=dark"/></a>
   &nbsp;
-  <a href="https://github.com/space-syndicate/space-station-14" title="Upstream Corvax"><img height="44" src="https://skillicons.dev/icons?i=git&theme=dark"/></a>
+  <a href="https://github.com/space-wizards/space-station-14" title="Upstream WizDen"><img height="44" src="https://skillicons.dev/icons?i=git&theme=dark"/></a>
 </p>
 
 

@@ -6,5 +6,14 @@
   id: 1
   time: '2026-08-24T14:10:37.0000000+00:00'
   url: https://github.com/space-interdyne/space-station-14/pull/37
+- author: DefinitelyNotMori
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u0438\u043B \u0432\u0435\u0431\u0445\u0443\
+      \u043A\u0438 \u043D\u0430 \u0431\u0430\u043D\u044B \u0432 \u0434\u0438\u0441\
+      \u043A\u043E\u0440\u0434"
+    type: Add
+  id: 2
+  time: '2026-08-24T17:54:37.0000000+00:00'
+  url: https://github.com/space-interdyne/space-station-14/pull/40
 Name: SD
 Order: -1

@@ -49,6 +49,9 @@ public sealed partial class GrabIntentComponent : Component
     public float SuffocateGrabStaminaDamage = 10f;
 
     [DataField]
+    public TimeSpan SuffocateGrabDamageInterval = TimeSpan.FromSeconds(1);
+
+    [DataField]
     public float GrabThrowDamageModifier = 2f;
 
     [DataField]

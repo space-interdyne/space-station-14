@@ -254,7 +254,6 @@
     cult: Blood
   - type: MeleeWeapon
     range: 2.5
-    possibilityWideAtack: false
     wideAnimationRotation: -135
     damage:
       types:

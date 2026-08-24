@@ -27,7 +27,7 @@ DISCORD_SPLIT_LIMIT = 2000
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 TRUNCATION_SUFFIX = " [...]"
 
-CHANGELOG_FILE = "Resources/Changelog/Changelog.yml"
+CHANGELOG_FILE = "Resources/Changelog/SD.yml" # SD edit
 
 TYPES_TO_EMOJI = {"Fix": "🐛", "Add": "🆕", "Remove": "❌", "Tweak": "⚒️"}
 
@@ -38,7 +38,8 @@ ChangelogEntry = dict[str, Any]
 
 
 def main():
-    if not DEBUG and not DISCORD_WEBHOOK_URL:
+    webhook_sd = os.environ.get("DISCORD_WEBHOOK_URL_SD")
+    if not webhook_sd:
         print("No discord webhook URL found, skipping discord send")
         return
 
@@ -176,26 +177,41 @@ def get_discord_body(content: str):
     }
 
 
+def send_with_retry(webhook_url: str, body: dict, name: str):
+    retry_attempt = 0
+    MAX_RETRIES = 20
+
+    while True:
+        try:
+            response = requests.post(webhook_url, json=body, timeout=10)
+            if response.status_code == 429:
+                retry_attempt += 1
+                if retry_attempt > MAX_RETRIES:
+                    print(f"[{name}] Too many retries, giving up")
+                    return
+                retry_after = response.json().get("retry_after", 5)
+                print(f"[{name}] Rate limited, retrying after {retry_after} seconds")
+                time.sleep(retry_after)
+                continue
+
+            response.raise_for_status()
+            print(f"Sent to {name} webhook")
+            break
+        except requests.exceptions.RequestException as e:
+            print(f"[{name}] Failed to send message: {e}")
+            break
+
 def send_discord_webhook(lines: list[str]):
     content = "".join(lines)
     body = get_discord_body(content)
-    retry_attempt = 0
 
-    try:
-        response = requests.post(DISCORD_WEBHOOK_URL, json=body, timeout=10)
-        while response.status_code == 429:
-            retry_attempt += 1
-            if retry_attempt > 20:
-                print("Too many retries on a single request despite following retry_after header... giving up")
-                exit(1)
-            retry_after = response.json().get("retry_after", 5)
-            print(f"Rate limited, retrying after {retry_after} seconds")
-            time.sleep(retry_after)
-            response = requests.post(DISCORD_WEBHOOK_URL, json=body, timeout=10)
-        response.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Failed to send message: {e}")
-        exit(1)
+    webhook_url_sd = os.environ.get("DISCORD_WEBHOOK_URL_SD")
+
+    if webhook_url_sd:
+        send_with_retry(webhook_url_sd, body, "SD")
+
+    if not webhook_url_sd:
+        print("No Discord webhooks configured!")
 
 
 def truncate_to_limit(text: str, limit: int) -> str:
@@ -242,7 +258,7 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
                 emoji = TYPES_TO_EMOJI.get(change["type"], "❓")
                 message = change["message"]
 
-                if EXPERIMENTAL_LABEL in entry["labels"]:
+                if EXPERIMENTAL_LABEL in entry.get("labels", []):
                     emoji = f"{emoji}{EXPERIMENTAL_EMOJI}"
 
                 message_lines.append(create_change_line(emoji, message, url))

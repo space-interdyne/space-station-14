@@ -1,0 +1,37 @@
+- type: entity
+  id: ClothingBeltSheathSyndicateFilled
+  parent: ClothingBeltSheathSyndicate
+  suffix: Filled
+  components:
+  - type: ItemSlots
+    slots:
+      item:
+        name: Rapier
+        startingItem: SyndicateRapier
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        ejectOnBreak: true
+        whitelist:
+          tags:
+          - SyndicateRapier
+
+- type: entity
+  parent: [ BaseItem, BaseSyndicateContraband ]
+  id: BeltSheathSyndieFilledBox
+  name: the Wrapped Rapier of the Syndicate
+  description: Unwrap.
+  components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,6
+  - type: Sprite
+    sprite: _Wega/Objects/Storage/sheath_rapier_gift.rsi
+    state: icon
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingBeltSheathSyndicateFilled
+    sound:
+      path: /Audio/Effects/unwrap.ogg

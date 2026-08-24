@@ -1,0 +1,23 @@
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: FiberWireGarrote
+  name: fiber wire
+  description: A length of razor-thin wire with wooden handles. Effective only from behind. Keep your other hand free to choke.
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Weapons/Melee/garrote.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+    sprite: _SD/Objects/Weapons/Melee/garrote.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    attackRate: 1
+    damage:
+      types:
+        Slash: 1
+    soundHit:
+      path: /Audio/_SD/Weapons/cablecuff.ogg
+  - type: Garrote
+  - type: StaticPrice
+    price: 2000

@@ -1,0 +1,27 @@
+- type: listing
+  id: UplinkFiberWireGarrote
+  name: uplink-fiber-wire-garrote-name
+  description: uplink-fiber-wire-garrote-desc
+  icon: { sprite: _SD/Objects/Weapons/Melee/garrote.rsi, state: icon }
+  productEntity: FiberWireGarrote
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 6
+  cost:
+    Telecrystal: 9
+  categories:
+  - UplinkWeaponry
+
+- type: listing
+  id: UplinkSyndicateTeleporterKit
+  name: uplink-syndicate-teleporter-kit-name
+  description: uplink-syndicate-teleporter-kit-desc
+  icon: { sprite: _SD/Objects/Devices/syndicate_teleporter.rsi, state: icon }
+  productEntity: SyndicateTeleporterKit
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 14
+  categories:
+  - UplinkDisruption

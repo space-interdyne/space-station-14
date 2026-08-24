@@ -1,0 +1,14 @@
+- files:
+  - "disintegrate.ogg"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Paradise SS13 (sound/magic/disintegrate.ogg)"
+  source: "https://github.com/ParadiseSS13/Paradise"
+
+- files:
+  - "sparks1.ogg"
+  - "sparks2.ogg"
+  - "sparks3.ogg"
+  - "sparks4.ogg"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Paradise SS13 (sound/effects/sparks1-4.ogg)"
+  source: "https://github.com/ParadiseSS13/Paradise"

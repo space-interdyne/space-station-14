@@ -1209,7 +1209,8 @@
   url: https://github.com/space-wizards/space-station-14/pull/44651
 - author: SlamBamActionman
   changes:
-  - message: Exo's chapel interior decoration has been changed to include a more interesting layout.
+  - message: Exo's chapel interior decoration has been changed to include a more interesting
+      layout.
     type: Tweak
   - message: Exo's Cargo front has been reworked to reduce the gap to Cargo.
     type: Tweak

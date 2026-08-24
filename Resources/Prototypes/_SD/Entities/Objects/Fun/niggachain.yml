@@ -1,0 +1,46 @@
+- type: entity
+  parent: BaseItem
+  id: Niggachain
+  name: niggachain
+  description: nigga chain
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Fun/niggachain.rsi
+    drawdepth: Overdoors
+    noRot: true
+    layers:
+    - state: icon
+      map: [ "enum.ToggleableVisuals.Layer" ]
+      shader: unshaded
+  - type: Item
+    size: Ginormous
+    sprite: _SD/Objects/Fun/niggachain.rsi
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-5,-2.8125,5,2.8125"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: ItemToggle
+    activated: true
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/_SD/Items/niggachain.ogg
+      params:
+        volume: -2
+        maxDistance: 16
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { state: icon }
+          False: { state: icon-off }

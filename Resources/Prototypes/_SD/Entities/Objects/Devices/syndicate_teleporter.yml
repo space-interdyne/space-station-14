@@ -1,0 +1,52 @@
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: SyndicateExperimentalTeleporter
+  name: experimental syndicate teleporter
+  description: A prototype bluespace blink device. Teleports you forward a short distance. Warranty void if exposed to EMP or walls.
+  components:
+  - type: Sprite
+    sprite: _SD/Objects/Devices/syndicate_teleporter.rsi
+    layers:
+    - state: icon
+      map: [ "charges" ]
+  - type: Item
+    size: Small
+    sprite: _SD/Objects/Devices/syndicate_teleporter.rsi
+  - type: SyndicateTeleporter
+  - type: LimitedCharges
+    maxCharges: 4
+    lastCharges: 4
+  - type: AutoRecharge
+    rechargeDuration: 30
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SyndicateTeleporterVisuals.Charges:
+        charges:
+          0: { state: syndi-tele-0 }
+          1: { state: syndi-tele-1 }
+          2: { state: syndi-tele-2 }
+          3: { state: syndi-tele-3 }
+          4: { state: syndi-tele-4 }
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
+  parent: [BoxCardboard, BaseSyndicateContraband]
+  id: SyndicateTeleporterKit
+  name: syndicate teleporter kit
+  description: An experimental teleporter and a pair of chameleon meson glasses.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,1
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SyndicateExperimentalTeleporter
+        - id: ClothingEyesChameleon
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+    - state: writing

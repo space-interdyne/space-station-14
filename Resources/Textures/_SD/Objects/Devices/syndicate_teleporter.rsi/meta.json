@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise SS13 (icons/obj/device.dmi syndi-tele-0..4; inhands from icons/mob/inhands electronic)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "syndi-tele-0"
+    },
+    {
+      "name": "syndi-tele-1"
+    },
+    {
+      "name": "syndi-tele-2"
+    },
+    {
+      "name": "syndi-tele-3"
+    },
+    {
+      "name": "syndi-tele-4"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

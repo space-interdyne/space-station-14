@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
+using Content.Server._SD.Administration;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
@@ -56,6 +57,7 @@ internal static class ServerContentIoC
         deps.Register<IGameMapManager, GameMapManager>();
         deps.Register<RulesManager, RulesManager>();
         deps.Register<IBanManager, BanManager>();
+        deps.Register<AdminPunishmentWebhookManager>(); // SD
         deps.Register<ContentNetworkResourceManager>();
         deps.Register<IAdminNotesManager, AdminNotesManager>();
         deps.Register<GhostKickManager>();

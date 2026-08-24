@@ -1,5 +1,6 @@
 using System.Text;
 using System.Threading.Tasks;
+using Content.Server._SD.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
@@ -30,6 +31,7 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private IChatManager _chat = default!;
+    [Dependency] private AdminPunishmentWebhookManager _punishmentWebhook = default!; // SD
 
     public const string SawmillId = "admin.notes";
 
@@ -172,6 +174,17 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
             seen
         );
         NoteAdded?.Invoke(note);
+
+        // SD-Edit-Start
+        if (!secret && type == NoteType.Note && severity is { } noteSeverity)
+        {
+            var playerName = (await _db.GetPlayerRecordByUserId(netUserId))?.LastSeenUserName ?? player.ToString();
+            DateTimeOffset? expiryOffset = expiryTime.HasValue
+                ? new DateTimeOffset(DateTime.SpecifyKind(expiryTime.Value, DateTimeKind.Utc))
+                : null;
+            _punishmentWebhook.SendNote(noteId, playerName, createdBy.Name, message, noteSeverity, expiryOffset);
+        }
+        // SD-Edit-End
 
         // Send a notification to the player that they received a non-secret note.
         if (!secret && type == NoteType.Note

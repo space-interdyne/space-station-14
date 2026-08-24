@@ -38,4 +38,10 @@ public sealed class SDCCVars
     public static readonly CVarDef<bool> SsdCryoTeleportEnabled =
         CVarDef.Create("sd.ssd_cryo_teleport_enabled", true, CVar.SERVER | CVar.ARCHIVE);
 
+    /// <summary>
+    /// URL of the Discord webhook for punishments
+    /// </summary>
+    public static readonly CVarDef<string> DiscordBanWebhook =
+        CVarDef.Create("sd.discord_ban_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
 }

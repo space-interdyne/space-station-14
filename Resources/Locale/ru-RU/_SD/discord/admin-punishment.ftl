@@ -1,0 +1,12 @@
+discord-admin-punishment-username = Админ-наказания
+discord-admin-punishment-server-ban-title = Серверный бан | ID {$banId}
+discord-admin-punishment-role-ban-title = Роль-бан | ID {$banId}
+discord-admin-punishment-note-title = Заметка | ID {$noteId}
+discord-admin-punishment-target = **Нарушитель:** {$target}
+discord-admin-punishment-admin = **Выдал(-а):** {$admin}
+discord-admin-punishment-reason = **Причина:** {$reason}
+discord-admin-punishment-severity = **Тяжесть:** {$severity}
+discord-admin-punishment-expires = **Истекает:** <t:{$expires}:F> (<t:{$expires}:R>)
+discord-admin-punishment-expires-permanent = **Истекает:** Навсегда
+discord-admin-punishment-roles = **Роли:** {$roles}
+discord-admin-punishment-footer = Сервер: {$serverName} | Раунд: {$roundId}

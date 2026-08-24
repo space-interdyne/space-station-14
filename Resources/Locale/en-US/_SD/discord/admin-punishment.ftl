@@ -1,0 +1,12 @@
+discord-admin-punishment-username = Admin Punishments
+discord-admin-punishment-server-ban-title = Server Ban | ID {$banId}
+discord-admin-punishment-role-ban-title = Role Ban | ID {$banId}
+discord-admin-punishment-note-title = Note | ID {$noteId}
+discord-admin-punishment-target = **Target:** {$target}
+discord-admin-punishment-admin = **Issued by:** {$admin}
+discord-admin-punishment-reason = **Reason:** {$reason}
+discord-admin-punishment-severity = **Severity:** {$severity}
+discord-admin-punishment-expires = **Expires:** <t:{$expires}:F> (<t:{$expires}:R>)
+discord-admin-punishment-expires-permanent = **Expires:** Permanent
+discord-admin-punishment-roles = **Roles:** {$roles}
+discord-admin-punishment-footer = Server: {$serverName} | Round: {$roundId}

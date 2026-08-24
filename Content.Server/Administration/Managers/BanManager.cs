@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server._SD.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -38,6 +39,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     [Dependency] private IEntitySystemManager _systems = default!;
     [Dependency] private ITaskManager _taskManager = default!;
     [Dependency] private UserDbDataManager _userDbData = default!;
+    [Dependency] private AdminPunishmentWebhookManager _punishmentWebhook = default!; // SD
 
     private ISawmill _sawmill = default!;
 
@@ -124,7 +126,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     {
         var (banDef, expires) = await CreateBanDef(banInfo, BanType.Server, null);
 
-        await _db.AddBanAsync(banDef);
+        banDef = await _db.AddBanAsync(banDef); // SD edit
 
         if (_cfg.GetCVar(CCVars.ServerBanResetLastReadRules))
         {
@@ -167,6 +169,10 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);
+
+        // SD-Edit-Start
+        _punishmentWebhook.SendServerBan(banDef.Id, targetName, adminName, banInfo.Reason, banDef.Severity, expires);
+        // SD-Edit-End
 
         KickMatchingConnectedPlayers(banDef, "newly placed ban");
     }
@@ -235,7 +241,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         var (banDef, expires) = await CreateBanDef(banInfo, BanType.Role, roleDefs);
 
-        await AddRoleBan(banDef);
+        banDef = await AddRoleBan(banDef); // SD edit
 
         var length = expires == null
             ? Loc.GetString("cmd-roleban-inf")
@@ -251,6 +257,21 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             ("role", string.Join(", ", roleDefs)),
             ("reason", banInfo.Reason),
             ("length", length)));
+
+        // SD-Edit-Start
+        var adminName = banInfo.BanningAdmin == null
+            ? Loc.GetString("system-user")
+            : (await _db.GetPlayerRecordByUserId(banInfo.BanningAdmin.Value))?.LastSeenUserName
+              ?? Loc.GetString("system-user");
+        _punishmentWebhook.SendRoleBan(
+            banDef.Id,
+            targetName,
+            adminName,
+            banInfo.Reason,
+            banDef.Severity,
+            expires,
+            string.Join(", ", roleDefs));
+        // SD-Edit-End
 
         foreach (var (userId, _) in banInfo.Users)
         {
@@ -344,7 +365,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         throw new ArgumentException($"Unknown prototype kind for role bans: {typeof(T)}");
     }
 
-    private async Task AddRoleBan(BanDef banDef)
+    private async Task<BanDef> AddRoleBan(BanDef banDef) // SD edit
     {
         banDef = await _db.AddBanAsync(banDef);
 
@@ -356,6 +377,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
                 cachedBans.Add(banDef);
             }
         }
+
+        return banDef; // SD edit
     }
 
     public async Task<string> PardonRoleBan(int banId, NetUserId? unbanningAdmin, DateTimeOffset unbanTime)

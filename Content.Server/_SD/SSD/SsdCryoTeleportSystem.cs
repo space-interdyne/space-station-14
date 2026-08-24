@@ -26,7 +26,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server._SD.SSD;
 
-public sealed class SsdCryoTeleportSystem : EntitySystem
+public sealed partial class SsdCryoTeleportSystem : EntitySystem
 {
     [Dependency] private GameTicker _ticker = default!;
     [Dependency] private IConfigurationManager _cfg = default!;

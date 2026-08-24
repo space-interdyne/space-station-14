@@ -21,25 +21,7 @@ public sealed class SDCCVars
         CVarDef.Create("sd.nsfw_content_enabled", true, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
 
     /// <summary>
-    /// When enabled, wish movement speed is scaled by alignment with body facing.
-    /// </summary>
-    public static readonly CVarDef<bool> MovementDirectionalPenaltyEnabled =
-        CVarDef.Create("sd.movement.directional_penalty_enabled", true, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
-
-    /// <summary>
-    /// Speed multiplier when moving perpendicular to facing (strafe).
-    /// </summary>
-    public static readonly CVarDef<float> MovementStrafeSpeedModifier =
-        CVarDef.Create("sd.movement.strafe_speed_modifier", 0.7f, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
-
-    /// <summary>
-    /// Speed multiplier when moving opposite to facing (backpedal).
-    /// </summary>
-    public static readonly CVarDef<float> MovementBackSpeedModifier =
-        CVarDef.Create("sd.movement.back_speed_modifier", 0.5f, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
-
-    /// <summary>
-    /// After this many seconds of SSD, spawn a portal and move the body into a random empty cryo pod.
+    /// After this many seconds of SSD, spawn a portal and move the body into a random empty cryogenic sleep unit.
     /// </summary>
     public static readonly CVarDef<float> SsdCryoTeleportTime =
         CVarDef.Create("sd.ssd_cryo_teleport_time", 900f, CVar.SERVER | CVar.ARCHIVE);
@@ -51,7 +33,7 @@ public sealed class SDCCVars
         CVarDef.Create("sd.ssd_cryo_portal_delay", 2.5f, CVar.SERVER | CVar.ARCHIVE);
 
     /// <summary>
-    /// Enable teleporting long-term SSD bodies into random cryo pods.
+    /// Enable teleporting long-term SSD bodies into random cryogenic sleep units.
     /// </summary>
     public static readonly CVarDef<bool> SsdCryoTeleportEnabled =
         CVarDef.Create("sd.ssd_cryo_teleport_enabled", true, CVar.SERVER | CVar.ARCHIVE);

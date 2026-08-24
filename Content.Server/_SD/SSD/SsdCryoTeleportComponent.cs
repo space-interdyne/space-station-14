@@ -1,21 +1,21 @@
+using System.Threading;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server._SD.SSD;
 
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent]
 public sealed partial class SsdCryoTeleportComponent : Component
 {
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan PortalSpawnTime;
 
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan? TeleportTime;
+    [DataField]
+    public EntityUid? TargetCryostorage;
 
     [DataField]
     public EntityUid? SourcePortal;
 
     [DataField]
     public EntityUid? DestinationPortal;
+
+    [ViewVariables]
+    public CancellationTokenSource? TimerCancel;
 }

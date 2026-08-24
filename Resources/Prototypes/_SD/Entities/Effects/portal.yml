@@ -2,7 +2,7 @@
   parent: PortalBlue
   id: PortalSsdCryo
   name: bluespace portal
-  description: A short-lived bluespace rift. It pulls SSD crew into cryogenics.
+  description: A short-lived bluespace rift. It pulls SSD crew into a cryogenic sleep unit.
   categories: [ HideSpawnMenu ]
   components:
   - type: Portal

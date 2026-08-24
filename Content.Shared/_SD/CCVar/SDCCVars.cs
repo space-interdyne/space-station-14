@@ -38,4 +38,22 @@ public sealed class SDCCVars
     public static readonly CVarDef<float> MovementBackSpeedModifier =
         CVarDef.Create("sd.movement.back_speed_modifier", 0.5f, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
 
+    /// <summary>
+    /// After this many seconds of SSD, spawn a portal and move the body into a random empty cryo pod.
+    /// </summary>
+    public static readonly CVarDef<float> SsdCryoTeleportTime =
+        CVarDef.Create("sd.ssd_cryo_teleport_time", 900f, CVar.SERVER | CVar.ARCHIVE);
+
+    /// <summary>
+    /// How long the SSD cryo portal stays visible before the body is teleported.
+    /// </summary>
+    public static readonly CVarDef<float> SsdCryoPortalDelay =
+        CVarDef.Create("sd.ssd_cryo_portal_delay", 2.5f, CVar.SERVER | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Enable teleporting long-term SSD bodies into random cryo pods.
+    /// </summary>
+    public static readonly CVarDef<bool> SsdCryoTeleportEnabled =
+        CVarDef.Create("sd.ssd_cryo_teleport_enabled", true, CVar.SERVER | CVar.ARCHIVE);
+
 }

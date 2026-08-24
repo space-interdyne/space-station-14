@@ -2,18 +2,20 @@ name: Publish Changelog
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: '0 10 * * *'
+  push:
+    branches:
+      - master
+    paths:
+      - 'Resources/Changelog/**'
 
 jobs:
- publish_changelog:
+  publish_changelog:
     runs-on: ubuntu-latest
     steps:
-
     - name: checkout
       uses: actions/checkout@v3
       with:
-        token: ${{secrets.GITHUB_TOKEN}}
+        token: ${{ secrets.GITHUB_TOKEN }}
         ref: master
 
     - name: Publish changelog
@@ -21,4 +23,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DISCORD_WEBHOOK_URL_SD: ${{ secrets.CHANGELOG_DISCORD_SD_WEBHOOK }}
-    continue-on-error: true

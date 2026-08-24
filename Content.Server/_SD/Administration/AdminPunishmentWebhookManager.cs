@@ -12,7 +12,7 @@ namespace Content.Server._SD.Administration;
 /// Sends Discord webhook notifications for admin punishments:
 /// server bans, role bans, and non-secret notes (not watchlists).
 /// </summary>
-public sealed class AdminPunishmentWebhookManager : IPostInjectInit
+public sealed partial class AdminPunishmentWebhookManager : IPostInjectInit
 {
     [Dependency] private IBaseServer _baseServer = default!;
     [Dependency] private IConfigurationManager _cfg = default!;

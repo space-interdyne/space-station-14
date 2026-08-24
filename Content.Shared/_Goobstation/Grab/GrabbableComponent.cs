@@ -36,6 +36,9 @@ public sealed partial class GrabbableComponent : Component
     [AutoNetworkedField]
     public TimeSpan NextEscapeAttempt = TimeSpan.Zero;
 
+    [AutoNetworkedField]
+    public TimeSpan NextSuffocateDamage = TimeSpan.Zero;
+    
     [DataField]
     public float EscapeAttemptCooldown = 2f;
 }

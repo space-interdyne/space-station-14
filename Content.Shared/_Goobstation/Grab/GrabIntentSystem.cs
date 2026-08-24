@@ -26,6 +26,7 @@ using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._Goobstation.Grab;
@@ -48,6 +49,8 @@ public sealed partial class GrabIntentSystem : EntitySystem
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private GrabThrownSystem _grabThrown = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private INetManager _net = default!;
 
     private readonly SoundPathSpecifier _thudswoosh = new("/Audio/Effects/thudswoosh.ogg");
 
@@ -56,6 +59,46 @@ public sealed partial class GrabIntentSystem : EntitySystem
         InitializeCoreEvents();
         InitializeGrabStageEvents();
         InitializeReleaseAndThrowEvents();
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!_net.IsServer)
+            return;
+
+        var query = EntityQueryEnumerator<GrabbableComponent, PullableComponent>();
+        while (query.MoveNext(out var uid, out var grabbable, out var pullable))
+        {
+            if (grabbable.GrabStage != GrabStage.Suffocate)
+                continue;
+
+            if (pullable.Puller is not { } puller
+                || !TryComp<GrabIntentComponent>(puller, out var grabIntent)
+                || grabIntent.GrabStage != GrabStage.Suffocate)
+                continue;
+
+            if (_timing.CurTime < grabbable.NextSuffocateDamage)
+                continue;
+
+            grabbable.NextSuffocateDamage = _timing.CurTime + grabIntent.SuffocateGrabDamageInterval;
+            Dirty(uid, grabbable);
+
+            // Base asphyxiation comes from RespiratorSystem.CanBreathe (gasp + vacuum damage).
+            // Only extra sources like a garrote apply bonus here.
+            var damageEv = new ModifySuffocateGrabDamageEvent(0f);
+            RaiseLocalEvent(puller, ref damageEv);
+            RaiseLocalEvent(uid, ref damageEv);
+
+            if (damageEv.Bonus <= 0)
+                continue;
+
+            _damageable.TryChangeDamage(uid, new DamageSpecifier
+            {
+                DamageDict = { ["Asphyxiation"] = damageEv.Bonus }
+            });
+        }
     }
 
     private void InitializeCoreEvents()
@@ -75,6 +118,7 @@ public sealed partial class GrabIntentSystem : EntitySystem
         component.GrabStage = GrabStage.No;
         component.GrabEscapeChance = 1f;
         component.EscapeAttemptModifier = 1f;
+        component.NextSuffocateDamage = TimeSpan.Zero;
         _blocker.UpdateCanMove(uid);
         _alertsSystem.ClearAlert(uid, component.PulledAlert);
         Dirty(uid, component);

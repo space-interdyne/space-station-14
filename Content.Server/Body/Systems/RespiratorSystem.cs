@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
+using Content.Shared._Goobstation.Grab;
 using Content.Shared.Body.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -72,6 +73,21 @@ public sealed partial class RespiratorSystem : EntitySystem
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
     }
 
+    /// <summary>
+    /// Goobstation: Suffocate grab prevents breathing the same way low saturation does.
+    /// </summary>
+    public bool CanBreathe(EntityUid uid, RespiratorComponent respirator)
+    {
+        if (respirator.Saturation < respirator.SuffocationThreshold)
+            return false;
+
+        if (TryComp<GrabbableComponent>(uid, out var grabbable)
+            && grabbable.GrabStage == GrabStage.Suffocate)
+            return false;
+
+        return true;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -104,7 +120,7 @@ public sealed partial class RespiratorSystem : EntitySystem
                 }
             }
 
-            if (respirator.Saturation < respirator.SuffocationThreshold)
+            if (!CanBreathe(uid, respirator))
             {
                 if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
                 {

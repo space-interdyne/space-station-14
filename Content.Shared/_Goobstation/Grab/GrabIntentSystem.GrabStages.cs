@@ -113,6 +113,9 @@ public sealed partial class GrabIntentSystem
         puller.Comp2.GrabStage = stage;
         pullable.Comp2.GrabStage = stage;
         pullable.Comp2.EscapeAttemptModifier *= escapeAttemptModifier;
+        if (stage == GrabStage.Suffocate)
+            pullable.Comp2.NextSuffocateDamage = _timing.CurTime + puller.Comp2.SuffocateGrabDamageInterval;
+
         if (!TryUpdateGrabVirtualItems(puller, pullable))
             return false;
 

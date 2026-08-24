@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: SDSparks
+  files:
+  - /Audio/_SD/Effects/sparks1.ogg
+  - /Audio/_SD/Effects/sparks2.ogg
+  - /Audio/_SD/Effects/sparks3.ogg
+  - /Audio/_SD/Effects/sparks4.ogg

@@ -36,4 +36,10 @@ public record struct RaiseGrabModifierEventEvent(
 public record struct FindGrabbingItemEvent(EntityUid? Grabbed = null, EntityUid? GrabbingItem = null);
 
 [ByRefEvent]
+public record struct ModifySuffocateGrabDamageEvent(float Damage)
+{
+    public float Bonus;
+}
+
+[ByRefEvent]
 public readonly record struct StopGrabbingItemPullEvent(EntityUid PulledUid);

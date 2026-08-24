@@ -1,0 +1,12 @@
+- type: entity
+  parent: PortalBlue
+  id: PortalSsdCryo
+  name: bluespace portal
+  description: A short-lived bluespace rift. It pulls SSD crew into a cryogenic sleep unit.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Portal
+    randomTeleport: false
+    canTeleportToOtherMaps: true
+  - type: TimedDespawn
+    lifetime: 8

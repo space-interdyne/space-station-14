@@ -20,4 +20,22 @@ public sealed class SDCCVars
     public static readonly CVarDef<bool> NsfwContentEnabled =
         CVarDef.Create("sd.nsfw_content_enabled", true, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
 
+    /// <summary>
+    /// After this many seconds of SSD, spawn a portal and move the body into a random empty cryogenic sleep unit.
+    /// </summary>
+    public static readonly CVarDef<float> SsdCryoTeleportTime =
+        CVarDef.Create("sd.ssd_cryo_teleport_time", 900f, CVar.SERVER | CVar.ARCHIVE);
+
+    /// <summary>
+    /// How long the SSD cryo portal stays visible before the body is teleported.
+    /// </summary>
+    public static readonly CVarDef<float> SsdCryoPortalDelay =
+        CVarDef.Create("sd.ssd_cryo_portal_delay", 2.5f, CVar.SERVER | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Enable teleporting long-term SSD bodies into random cryogenic sleep units.
+    /// </summary>
+    public static readonly CVarDef<bool> SsdCryoTeleportEnabled =
+        CVarDef.Create("sd.ssd_cryo_teleport_enabled", true, CVar.SERVER | CVar.ARCHIVE);
+
 }

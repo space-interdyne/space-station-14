@@ -12,5 +12,6 @@ public static class SDContentContexts
     {
         human.AddFunction(SDKeyFunctions.ToggleRaiseShield);
         human.AddFunction(SDKeyFunctions.ResistGrab);
+        human.AddFunction(SDKeyFunctions.Sprint);
     }
 }

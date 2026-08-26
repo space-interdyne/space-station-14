@@ -15,5 +15,13 @@
   id: 2
   time: '2026-08-24T17:54:37.0000000+00:00'
   url: https://github.com/space-interdyne/space-station-14/pull/40
+- author: DefinitelyNotMori
+  changes:
+  - message: "\u041F\u043E\u0440\u0442 \u0431\u0435\u0433\u0430 \u0441 \u0433\u0443\
+      \u0431\u043E\u0432"
+    type: Add
+  id: 3
+  time: '2026-08-26T15:45:20.0000000+00:00'
+  url: https://github.com/space-interdyne/space-station-14/pull/42
 Name: SD
 Order: -1

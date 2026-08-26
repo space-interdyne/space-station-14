@@ -552,8 +552,10 @@ binds:
 # SD edit start
 - function: ToggleRaiseShield
   type: State
+  key: H
+- function: Sprint
+  type: State
   key: Space
-
 # SD edit end
 
 # Goobstation start

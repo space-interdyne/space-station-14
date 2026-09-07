@@ -131,7 +131,7 @@ public sealed partial class VibratorSystem : EntitySystem
         UpdateVisuals(uid, component);
     }
 
-    private void OnSignalReceived(EntityUid uid, VibratorComponent component, SignalReceivedEvent args)
+    private void OnSignalReceived(EntityUid uid, VibratorComponent component, ref SignalReceivedEvent args)
     {
         switch (args.Port)
         {
@@ -157,17 +157,6 @@ public sealed partial class VibratorSystem : EntitySystem
                 break;
             case "SetHigh":
                 SetIntensity(uid, component, VibratorIntensity.High);
-                break;
-            case "SetIntensity":
-                if (args.Data != null &&
-                    args.Data.TryGetValue("intensity", out var intensityObj) &&
-                    Enum.TryParse<VibratorIntensity>(intensityObj?.ToString(), out var intensity))
-                {
-                    if (intensity == VibratorIntensity.Off)
-                        Deactivate(uid, component);
-                    else
-                        SetIntensity(uid, component, intensity);
-                }
                 break;
         }
     }

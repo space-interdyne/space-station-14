@@ -23,5 +23,12 @@
   id: 3
   time: '2026-08-26T15:45:20.0000000+00:00'
   url: https://github.com/space-interdyne/space-station-14/pull/42
+- author: DefinitelyNotMori
+  changes:
+  - message: Upstream
+    type: Add
+  id: 4
+  time: '2026-09-07T12:06:47.0000000+00:00'
+  url: https://github.com/space-interdyne/space-station-14/pull/43
 Name: SD
 Order: -1

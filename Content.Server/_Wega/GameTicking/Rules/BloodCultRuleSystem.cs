@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
-using Content.Server.Antag;
 using Content.Server.Bed.Cryostorage;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -10,6 +9,7 @@ using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Shared.Antag;
 using Content.Shared.Blood.Cult;
 using Content.Shared.Blood.Cult.Components;
 using Content.Shared.Body;
@@ -17,7 +17,9 @@ using Content.Shared.Body.Components;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.Metabolism;
@@ -27,6 +29,7 @@ using Content.Shared.Mobs;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
+using Content.Shared.RoundEnd;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -81,11 +84,10 @@ namespace Content.Server.GameTicking.Rules
             SubscribeLocalEvent<BloodCultistComponent, EntityZombifiedEvent>(OnCultistZombified);
         }
 
-        protected override void Started(EntityUid uid, BloodCultRuleComponent component,
-            GameRuleComponent gameRule, GameRuleStartedEvent args)
+        protected override void Started(Entity<BloodCultRuleComponent, GameRuleComponent> rule, ref GameRuleStartedEvent args)
         {
-            base.Started(uid, component, gameRule, args);
-            component.SelectedGod = (BloodCultGod)_random.Next(0, 3);
+            base.Started(rule, ref args);
+            rule.Comp1.SelectedGod = (BloodCultGod)_random.Next(0, 3);
         }
 
         private void OnCryostorageEnter(EntityUid uid, BloodCultObjectComponent component, CryostorageEnterEvent args)
@@ -127,34 +129,29 @@ namespace Content.Server.GameTicking.Rules
         {
             cult.SelectedTargets.Clear();
 
+            // Prefer living crew with an active mindshield status, not implant entities
+            // that merely carry MindShieldComponent.
             var mindShieldCandidates = new List<EntityUid>();
-            var enumerator = EntityQueryEnumerator<MindShieldComponent>();
-            while (enumerator.MoveNext(out var uid, out _))
-                mindShieldCandidates.Add(uid);
-
-            if (mindShieldCandidates.Count >= 2)
+            var enumerator = EntityQueryEnumerator<MindShieldStatusComponent, HumanoidProfileComponent, ActorComponent>();
+            while (enumerator.MoveNext(out var uid, out var status, out _, out _))
             {
-                var selectedIndices = new HashSet<int>();
-                while (selectedIndices.Count < 2)
-                {
-                    var index = _random.Next(0, mindShieldCandidates.Count);
-                    selectedIndices.Add(index);
-                }
+                if (!status.IsMindshielded || HasComp<BloodCultistComponent>(uid))
+                    continue;
 
-                foreach (var index in selectedIndices)
-                {
-                    var target = mindShieldCandidates[index];
-                    cult.SelectedTargets.Add(target);
-                    EnsureComp<BloodCultObjectComponent>(target);
-                }
-                return;
+                mindShieldCandidates.Add(uid);
             }
 
-            foreach (var target in mindShieldCandidates)
+            while (cult.SelectedTargets.Count < 2 && mindShieldCandidates.Count > 0)
             {
+                var index = _random.Next(0, mindShieldCandidates.Count);
+                var target = mindShieldCandidates[index];
                 cult.SelectedTargets.Add(target);
                 EnsureComp<BloodCultObjectComponent>(target);
+                mindShieldCandidates.RemoveAt(index);
             }
+
+            if (cult.SelectedTargets.Count >= 2)
+                return;
 
             var globalCandidates = new List<EntityUid>();
             var globalEnumerator = EntityQueryEnumerator<HumanoidProfileComponent, ActorComponent>();
@@ -291,7 +288,7 @@ namespace Content.Server.GameTicking.Rules
             string selectedGod = "";
             var query = QueryActiveRules();
 
-            while (query.MoveNext(out _, out _, out var cult, out _))
+            while (query.MoveNext(out _, out var cult, out _, out _))
             {
                 selectedGod = cult.SelectedGod switch
                 {
@@ -333,7 +330,7 @@ namespace Content.Server.GameTicking.Rules
 
             MakeCultist(uid);
             var query = QueryActiveRules();
-            while (query.MoveNext(out _, out _, out var cult, out _))
+            while (query.MoveNext(out _, out var cult, out _, out _))
             {
                 EntProtoId selectedDagger = cult.SelectedGod switch
                 {
@@ -493,11 +490,10 @@ namespace Content.Server.GameTicking.Rules
 
         #endregion
 
-        protected override void AppendRoundEndText(EntityUid uid,
-            BloodCultRuleComponent component,
-            GameRuleComponent gameRule,
+        protected override void AppendRoundEndText(Entity<BloodCultRuleComponent> rule,
             ref RoundEndTextAppendEvent args)
         {
+            var component = rule.Comp;
             string selectedGod = "";
             var query = QueryActiveRules();
 
@@ -510,7 +506,7 @@ namespace Content.Server.GameTicking.Rules
                 args.AddLine(text);
             }
 
-            while (query.MoveNext(out _, out _, out var cult, out _))
+            while (query.MoveNext(out _, out var cult, out _, out _))
             {
                 selectedGod = cult.SelectedGod switch
                 {
@@ -524,7 +520,7 @@ namespace Content.Server.GameTicking.Rules
 
             args.AddLine(Loc.GetString("blood-cultist-list-start", ("god", selectedGod)));
 
-            var antags = _antag.GetAntagIdentifiers(uid);
+            var antags = _antag.GetAntagIdentifiers(rule.Owner);
             foreach (var (_, sessionData, name) in antags)
             {
                 args.AddLine(Loc.GetString("blood-cultist-list-name-user", ("name", name), ("user", sessionData.UserName)));
@@ -534,7 +530,7 @@ namespace Content.Server.GameTicking.Rules
         public BloodCultRuleComponent? GetActiveRule()
         {
             var query = QueryActiveRules();
-            while (query.MoveNext(out _, out _, out var cult, out _))
+            while (query.MoveNext(out _, out var cult, out _, out _))
             {
                 return cult;
             }

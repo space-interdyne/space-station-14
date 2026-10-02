@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Antag;
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Antag;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;

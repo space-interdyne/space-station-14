@@ -1,17 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Content.Server.GameTicking;
 using Content.Shared._SD.CCVar;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Buckle;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.SSDIndicator;
-using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Shared.Audio;
@@ -37,7 +37,7 @@ public sealed partial class SsdCryoTeleportSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedBuckleSystem _buckle = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedStationSystem _station = default!;
+    [Dependency] private StationSystem _station = default!;
 
     private static readonly EntProtoId PortalPrototype = "PortalSsdCryo";
     private static readonly SoundSpecifier DefaultDepartureSound =

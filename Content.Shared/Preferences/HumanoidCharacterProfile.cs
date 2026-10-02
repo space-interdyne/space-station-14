@@ -45,7 +45,7 @@ namespace Content.Shared.Preferences
         private Dictionary<ProtoId<JobPrototype>, JobPriority> _jobPriorities = new()
         {
             {
-                SharedGameTicker.FallbackOverflowJob, JobPriority.High
+                GameTicker.FallbackOverflowJob, JobPriority.High
             }
         };
 
@@ -328,15 +328,15 @@ namespace Content.Shared.Preferences
         /// <returns>A new character profile with values randomized</returns>
         public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
         {
-            // SD edit start
-            if (ignoredSpecies == null)
-                return Random(RandomizeConfigAll, new HumanoidCharacterProfile());
-
-            // Species is chosen against the blacklist first; other fields are randomized for that species.
-            return Random(
-                RandomizeConfigAll ^ RandomizeCfg.Species,
-                new HumanoidCharacterProfile().WithSpecies(RandomSpecies(ignoredSpecies).ID));
-            // SD edit end
+            var config = RandomizeConfigAll;
+            var baseProfile = new HumanoidCharacterProfile();
+            if (ignoredSpecies != null)
+            {
+                baseProfile.Species = RandomSpecies(ignoredSpecies);
+                config ^= RandomizeCfg.Species;
+            }
+            var profile = Random(config, baseProfile);
+            return profile;
         }
 
         /// <summary>

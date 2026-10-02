@@ -23,6 +23,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mindshield;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Standing;
@@ -47,6 +48,7 @@ public sealed partial class BloodCultSystem : SharedBloodCultSystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MetaDataSystem _meta = default!;
+    [Dependency] private MindShieldSystem _mindShield = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private RoundEndSystem _roundEndSystem = default!;
     [Dependency] private ServerGlobalSoundSystem _sound = default!;

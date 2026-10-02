@@ -22,6 +22,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mindshield;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Borgs.Components;
@@ -343,7 +344,8 @@ public sealed partial class BloodCultSystem
                 || HasComp<BibleUserComponent>(target))
                 continue;
 
-            if (_mobState.IsDead(target) && IsSpecialTarget(target) && !IsSyntheticBody(target))
+            // Mindshielded / objective targets always gib (alive or dead), never convert.
+            if (IsSpecialTarget(target) && !IsSyntheticBody(target))
             {
                 if (CheckRuneActivate(coords, 3))
                     HandleSpecialSacrifice(target, cultist, coords, runeComp);
@@ -351,7 +353,8 @@ public sealed partial class BloodCultSystem
                     ShowActivationFailed(cultist);
                 break;
             }
-            else if (!_mobState.IsDead(target) && IsConvertibleTarget(target))
+
+            if (!_mobState.IsDead(target) && IsConvertibleTarget(target))
             {
                 if (CheckRuneActivate(coords, 2))
                     ConvertToCultist(target, cultist, coords, runeComp);
@@ -359,7 +362,8 @@ public sealed partial class BloodCultSystem
                     ShowActivationFailed(cultist);
                 break;
             }
-            else if (_mobState.IsDead(target) && IsRegularTarget(target))
+
+            if (_mobState.IsDead(target) && IsRegularTarget(target))
             {
                 if (CheckRuneActivate(coords, 1))
                     HandleRegularSacrifice(target, cultist, coords, runeComp);
@@ -367,30 +371,35 @@ public sealed partial class BloodCultSystem
                     ShowActivationFailed(cultist);
                 break;
             }
-            else
-            {
-                ShowActivationFailed(cultist);
-            }
+
+            ShowActivationFailed(cultist);
         }
+    }
+
+    private bool HasActiveMindshield(EntityUid target)
+    {
+        _mindShield.RefreshMindshieldStatus(target);
+        _mindShield.GetMindshieldStatus(target, out var isMindshielded, out _);
+        return isMindshielded;
     }
 
     private bool IsSpecialTarget(EntityUid target)
     {
-        return HasComp<MindShieldComponent>(target)
+        return HasActiveMindshield(target)
             || HasComp<BibleUserComponent>(target)
             || HasComp<BloodCultObjectComponent>(target);
     }
 
     private bool IsConvertibleTarget(EntityUid target)
     {
-        return !HasComp<MindShieldComponent>(target)
+        return !HasActiveMindshield(target)
             && !HasComp<BibleUserComponent>(target)
             && !IsSyntheticBody(target);
     }
 
     private bool IsRegularTarget(EntityUid target)
     {
-        return !HasComp<MindShieldComponent>(target)
+        return !HasActiveMindshield(target)
             && !HasComp<BibleUserComponent>(target)
             && !IsSyntheticBody(target);
     }
